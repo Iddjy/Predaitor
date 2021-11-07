@@ -9,15 +9,15 @@ ViridianPokecenter_TextPointers:
 	dw ViridianTradeNurseText
 
 ViridianHealNurseText:
-	script_pokecenter_nurse
+	TX_POKECENTER_NURSE
 
 ViridianPokeCenterText2:
-	text_far _ViridianPokeCenterText2
-	text_end
+	TX_FAR _ViridianPokeCenterText2
+	db "@"
 
 ViridianPokeCenterText3:
-	text_far _ViridianPokeCenterText3
-	text_end
+	TX_FAR _ViridianPokeCenterText3
+	db "@"
 
 ViridianTradeNurseText:
-	script_cable_club_receptionist
+	TX_CABLE_CLUB_RECEPTIONIST

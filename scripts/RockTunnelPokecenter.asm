@@ -9,15 +9,15 @@ RockTunnelPokecenter_TextPointers:
 	dw RockTunnelTradeNurseText
 
 RockTunnelHealNurseText:
-	script_pokecenter_nurse
+	db $ff
 
 RockTunnelPokecenterText2:
-	text_far _RockTunnelPokecenterText2
-	text_end
+	TX_FAR _RockTunnelPokecenterText2
+	db "@"
 
 RockTunnelPokecenterText3:
-	text_far _RockTunnelPokecenterText3
-	text_end
+	TX_FAR _RockTunnelPokecenterText3
+	db "@"
 
 RockTunnelTradeNurseText:
-	script_cable_club_receptionist
+	db $f6

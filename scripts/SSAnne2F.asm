@@ -24,26 +24,26 @@ SSAnne2Script0:
 	ld hl, CoordsData_61411
 	call ArePlayerCoordsInArray
 	ret nc
-	ld a, SFX_STOP_ALL_MUSIC
+	ld a, $ff
 	ld [wNewSoundID], a
 	call PlaySound
 	ld c, BANK(Music_MeetRival)
 	ld a, MUSIC_MEET_RIVAL
 	call PlayMusic
 	ld a, [wCoordIndex]
-	ldh [hSavedCoordIndex], a
+	ld [$ffdb], a
 	ld a, HS_SS_ANNE_2F_RIVAL
 	ld [wMissableObjectIndex], a
 	predef ShowObject
 	call Delay3
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	call SetSpriteMovementBytesToFF
 	xor a
-	ldh [hJoyHeld], a
+	ld [hJoyHeld], a
 	ld a, $f0
 	ld [wJoyIgnore], a
-	ldh a, [hSavedCoordIndex]
+	ld a, [$ffdb]
 	cp $2
 	jr nz, .asm_61400
 	ld de, MovementData_6140c
@@ -58,20 +58,21 @@ SSAnne2Script0:
 
 MovementData_6140c:
 	db NPC_MOVEMENT_DOWN
+
 MovementData_6140d:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
-	db -1 ; end
+	db $FF
 
 CoordsData_61411:
-	dbmapcoord 36,  8
-	dbmapcoord 37,  8
-	db -1 ; end
+	db $08,$24
+	db $08,$25
+	db $FF
 
 SSAnne2Script_61416:
 	ld a, [wXCoord]
-	cp 37
+	cp $25
 	jr nz, .asm_61426
 	ld a, PLAYER_DIR_LEFT
 	ld [wPlayerMovingDirection], a
@@ -80,9 +81,9 @@ SSAnne2Script_61416:
 .asm_61426
 	xor a ; SPRITE_FACING_DOWN
 .asm_61427
-	ldh [hSpriteFacingDirection], a
+	ld [hSpriteFacingDirection], a
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	jp SetSpriteFacingDirectionAndDelay
 
 SSAnne2Script1:
@@ -93,10 +94,10 @@ SSAnne2Script1:
 	xor a
 	ld [wJoyIgnore], a
 	ld a, $2
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	call Delay3
-	ld a, OPP_RIVAL2
+	ld a, OPP_SONY2
 	ld [wCurOpponent], a
 
 	; select which team to use during the encounter
@@ -128,13 +129,13 @@ SSAnne2Script2:
 	ld a, $f0
 	ld [wJoyIgnore], a
 	ld a, $3
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	call SetSpriteMovementBytesToFF
 	ld a, [wXCoord]
-	cp 37
+	cp $25
 	jr nz, .asm_61497
 	ld de, MovementData_614b9
 	jr .asm_6149a
@@ -142,12 +143,12 @@ SSAnne2Script2:
 	ld de, MovementData_614b7
 .asm_6149a
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	call MoveSprite
-	ld a, SFX_STOP_ALL_MUSIC
+	ld a, $ff
 	ld [wNewSoundID], a
 	call PlaySound
-	farcall Music_RivalAlternateStart
+	callba Music_RivalAlternateStart
 	ld a, $3
 	ld [wSSAnne2FCurScript], a
 	ret
@@ -155,12 +156,13 @@ SSAnne2Script2:
 MovementData_614b7:
 	db NPC_MOVEMENT_RIGHT
 	db NPC_MOVEMENT_DOWN
+
 MovementData_614b9:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
-	db -1 ; end
+	db $FF
 
 SSAnne2Script3:
 	ld a, [wd730]
@@ -182,11 +184,11 @@ SSAnne2F_TextPointers:
 	dw SSAnne2Text3
 
 SSAnne2Text1:
-	text_far _SSAnne2Text1
-	text_end
+	TX_FAR _SSAnne2Text1
+	db "@"
 
 SSAnne2Text2:
-	text_asm
+	TX_ASM
 	ld hl, SSAnneRivalBeforeBattleText
 	call PrintText
 	ld hl, wd72d
@@ -198,17 +200,17 @@ SSAnne2Text2:
 	jp TextScriptEnd
 
 SSAnneRivalBeforeBattleText:
-	text_far _SSAnneRivalBeforeBattleText
-	text_end
+	TX_FAR _SSAnneRivalBeforeBattleText
+	db "@"
 
 SSAnneRivalDefeatedText:
-	text_far _SSAnneRivalDefeatedText
-	text_end
+	TX_FAR _SSAnneRivalDefeatedText
+	db "@"
 
 SSAnneRivalWonText:
-	text_far _SSAnneRivalWonText
-	text_end
+	TX_FAR _SSAnneRivalWonText
+	db "@"
 
 SSAnne2Text3:
-	text_far _SSAnneRivalCaptainText
-	text_end
+	TX_FAR _SSAnneRivalCaptainText
+	db "@"

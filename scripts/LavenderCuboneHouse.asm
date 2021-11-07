@@ -7,29 +7,29 @@ LavenderCuboneHouse_TextPointers:
 	dw LavenderHouse2Text2
 
 LavenderHouse2Text1:
-	text_far _LavenderHouse2Text1
-	text_asm
+	TX_FAR _LavenderHouse2Text1
+	TX_ASM
 	ld a, CUBONE
 	call PlayCry
 	jp TextScriptEnd
 
 LavenderHouse2Text2:
-	text_asm
+	TX_ASM
 	CheckEvent EVENT_RESCUED_MR_FUJI
-	jr nz, .rescued_mr_fuji
+	jr nz, .asm_65711
 	ld hl, LavenderHouse2Text_1d9dc
 	call PrintText
-	jr .done
-.rescued_mr_fuji
+	jr .asm_64be1
+.asm_65711
 	ld hl, LavenderHouse2Text_1d9e1
 	call PrintText
-.done
+.asm_64be1
 	jp TextScriptEnd
 
 LavenderHouse2Text_1d9dc:
-	text_far _LavenderHouse2Text_1d9dc
-	text_end
+	TX_FAR _LavenderHouse2Text_1d9dc
+	db "@"
 
 LavenderHouse2Text_1d9e1:
-	text_far _LavenderHouse2Text_1d9e1
-	text_end
+	TX_FAR _LavenderHouse2Text_1d9e1
+	db "@"

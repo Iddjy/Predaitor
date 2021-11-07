@@ -6,12 +6,12 @@ Route2TradeHouse_TextPointers:
 	dw Route2HouseText2
 
 Route2HouseText1:
-	text_far _Route2HouseText1
-	text_end
+	TX_FAR _Route2HouseText1
+	db "@"
 
 Route2HouseText2:
-	text_asm
-	ld a, TRADE_FOR_MARCEL
+	TX_ASM
+	ld a, $1
 	ld [wWhichTrade], a
 	predef DoInGameTradeDialogue
 	jp TextScriptEnd

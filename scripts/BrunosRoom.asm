@@ -1,7 +1,7 @@
 BrunosRoom_Script:
 	call BrunoShowOrHideExitBlock
 	call EnableAutoTextBoxDrawing
-	ld hl, BrunosRoomTrainerHeaders
+	ld hl, BrunoTrainerHeader0
 	ld de, BrunosRoom_ScriptPointers
 	ld a, [wBrunosRoomCurScript]
 	call ExecuteCurMapScriptInTable
@@ -63,8 +63,8 @@ BrunoScript0:
 	call ArePlayerCoordsInArray
 	jp nc, CheckFightingMapTrainers
 	xor a
-	ldh [hJoyPressed], a
-	ldh [hJoyHeld], a
+	ld [hJoyPressed], a
+	ld [hJoyHeld], a
 	ld [wSimulatedJoypadStatesEnd], a
 	ld [wSimulatedJoypadStatesIndex], a
 	ld a, [wCoordIndex]
@@ -74,7 +74,7 @@ BrunoScript0:
 	jr z, BrunoScriptWalkIntoRoom
 .stopPlayerFromLeaving
 	ld a, $2
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID  ; "Don't run away!"
 	ld a, D_UP
 	ld [wSimulatedJoypadStatesEnd], a
@@ -87,11 +87,11 @@ BrunoScript0:
 	ret
 
 BrunoEntranceCoords:
-	dbmapcoord  4, 10
-	dbmapcoord  5, 10
-	dbmapcoord  4, 11
-	dbmapcoord  5, 11
-	db -1 ; end
+	db $0A,$04
+	db $0A,$05
+	db $0B,$04
+	db $0B,$05
+	db $FF
 
 BrunoScript3:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -110,37 +110,42 @@ BrunoScript2:
 	cp $ff
 	jp z, ResetBrunoScript
 	ld a, $1
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	jp DisplayTextID
 
 BrunosRoom_TextPointers:
 	dw BrunoText1
 	dw BrunoDontRunAwayText
 
-BrunosRoomTrainerHeaders:
-	def_trainers
-BrunosRoomTrainerHeader0:
-	trainer EVENT_BEAT_BRUNOS_ROOM_TRAINER_0, 0, BrunoBeforeBattleText, BrunoEndBattleText, BrunoAfterBattleText
-	db -1 ; end
+BrunoTrainerHeader0:
+	dbEventFlagBit EVENT_BEAT_BRUNOS_ROOM_TRAINER_0
+	db ($0 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_BRUNOS_ROOM_TRAINER_0
+	dw BrunoBeforeBattleText ; TextBeforeBattle
+	dw BrunoAfterBattleText ; TextAfterBattle
+	dw BrunoEndBattleText ; TextEndBattle
+	dw BrunoEndBattleText ; TextEndBattle
+
+	db $ff
 
 BrunoText1:
-	text_asm
-	ld hl, BrunosRoomTrainerHeader0
+	TX_ASM
+	ld hl, BrunoTrainerHeader0
 	call TalkToTrainer
 	jp TextScriptEnd
 
 BrunoBeforeBattleText:
-	text_far _BrunoBeforeBattleText
-	text_end
+	TX_FAR _BrunoBeforeBattleText
+	db "@"
 
 BrunoEndBattleText:
-	text_far _BrunoEndBattleText
-	text_end
+	TX_FAR _BrunoEndBattleText
+	db "@"
 
 BrunoAfterBattleText:
-	text_far _BrunoAfterBattleText
-	text_end
+	TX_FAR _BrunoAfterBattleText
+	db "@"
 
 BrunoDontRunAwayText:
-	text_far _BrunoDontRunAwayText
-	text_end
+	TX_FAR _BrunoDontRunAwayText
+	db "@"

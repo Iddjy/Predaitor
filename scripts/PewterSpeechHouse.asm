@@ -6,9 +6,9 @@ PewterSpeechHouse_TextPointers:
 	dw PewterHouse2Text2
 
 PewterHouse2Text1:
-	text_far _PewterHouse2Text1
-	text_end
+	TX_FAR _PewterHouse2Text1
+	db "@"
 
 PewterHouse2Text2:
-	text_far _PewterHouse2Text2
-	text_end
+	TX_FAR _PewterHouse2Text2
+	db "@"

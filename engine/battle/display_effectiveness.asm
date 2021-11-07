@@ -10,9 +10,9 @@ DisplayEffectiveness:
 	jp PrintText
 
 SuperEffectiveText:
-	text_far _SuperEffectiveText
-	text_end
+	TX_FAR _SuperEffectiveText
+	db "@"
 
 NotVeryEffectiveText:
-	text_far _NotVeryEffectiveText
-	text_end
+	TX_FAR _NotVeryEffectiveText
+	db "@"

@@ -21,88 +21,88 @@ CeladonMart3F_TextPointers:
 	dw CeladonMart3Text17
 
 CeladonMart3Text1:
-	text_asm
+	TX_ASM
 	CheckEvent EVENT_GOT_TM18
-	jr nz, .got_item
+	jr nz, .asm_a5463
 	ld hl, TM18PreReceiveText
 	call PrintText
-	lb bc, TM_COUNTER, 1
+	lb bc, TM_18, 1
 	call GiveItem
-	jr nc, .bag_full
+	jr nc, .BagFull
 	SetEvent EVENT_GOT_TM18
 	ld hl, ReceivedTM18Text
-	jr .done
-.bag_full
+	jr .asm_81359
+.BagFull
 	ld hl, TM18NoRoomText
-	jr .done
-.got_item
+	jr .asm_81359
+.asm_a5463
 	ld hl, TM18ExplanationText
-.done
+.asm_81359
 	call PrintText
 	jp TextScriptEnd
 
 TM18PreReceiveText:
-	text_far _TM18PreReceiveText
-	text_end
+	TX_FAR _TM18PreReceiveText
+	db "@"
 
 ReceivedTM18Text:
-	text_far _ReceivedTM18Text
-	sound_get_item_1
-	text_end
+	TX_FAR _ReceivedTM18Text
+	TX_SFX_ITEM_1
+	db "@"
 
 TM18ExplanationText:
-	text_far _TM18ExplanationText
-	text_end
+	TX_FAR _TM18ExplanationText
+	db "@"
 
 TM18NoRoomText:
-	text_far _TM18NoRoomText
-	text_end
+	TX_FAR _TM18NoRoomText
+	db "@"
 
 CeladonMart3Text2:
-	text_far _CeladonMart3Text2
-	text_end
+	TX_FAR _CeladonMart3Text2
+	db "@"
 
 CeladonMart3Text3:
-	text_far _CeladonMart3Text3
-	text_end
+	TX_FAR _CeladonMart3Text3
+	db "@"
 
 CeladonMart3Text4:
-	text_far _CeladonMart3Text4
-	text_end
+	TX_FAR _CeladonMart3Text4
+	db "@"
 
 CeladonMart3Text5:
-	text_far _CeladonMart3Text5
-	text_end
+	TX_FAR _CeladonMart3Text5
+	db "@"
 
-CeladonMart3Text12:
+CeladonMart3Text12
 CeladonMart3Text10:
 CeladonMart3Text8:
 CeladonMart3Text6:
-	text_far _CeladonMart3Text6
-	text_end
+	TX_FAR _CeladonMart3Text6
+	db "@"
 
 CeladonMart3Text7:
-	text_far _CeladonMart3Text7
-	text_end
+	TX_FAR _CeladonMart3Text7
+	db "@"
 
 CeladonMart3Text9:
-	text_far _CeladonMart3Text9
-	text_end
+	TX_FAR _CeladonMart3Text9
+	db "@"
 
 CeladonMart3Text11:
-	text_far _CeladonMart3Text11
-	text_end
+	TX_FAR _CeladonMart3Text11
+	db "@"
 
 CeladonMart3Text13:
-	text_far _CeladonMart3Text13
-	text_end
+	TX_FAR _CeladonMart3Text13
+	db "@"
 
 CeladonMart3Text14:
-	text_far _CeladonMart3Text14
-	text_end
+	TX_FAR _CeladonMart3Text14
+	db "@"
 
 CeladonMart3Text17:
 CeladonMart3Text16:
 CeladonMart3Text15:
-	text_far _CeladonMart3Text15
-	text_end
+	TX_FAR _CeladonMart3Text15
+	db "@"

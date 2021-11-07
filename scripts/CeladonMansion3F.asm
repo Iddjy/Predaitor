@@ -12,58 +12,60 @@ CeladonMansion3F_TextPointers:
 	dw GameFreakSignText
 
 ProgrammerText:
-	text_far _ProgrammerText
-	text_end
+	TX_FAR _ProgrammerText
+	db "@"
 
 GraphicArtistText:
-	text_far _GraphicArtistText
-	text_end
+	TX_FAR _GraphicArtistText
+	db "@"
 
 WriterText:
-	text_far _WriterText
-	text_end
+	TX_FAR _WriterText
+	db "@"
 
 DirectorText:
-	text_asm
+	TX_ASM
+
+	; check pokédex
 	ld hl, wPokedexOwned
 	ld b, wPokedexOwnedEnd - wPokedexOwned
 	call CountSetBits
 	ld a, [wNumSetBits]
-	cp NUM_POKEMON - 1 ; discount Mew
-	jr nc, .completed_dex
-	ld hl, .GameDesignerText
+	cp 150
+	jr nc, .CompletedDex
+	ld hl, .GameDesigner
 	jr .done
-.completed_dex
+.CompletedDex
 	ld hl, .CompletedDexText
 .done
 	call PrintText
 	jp TextScriptEnd
 
-.GameDesignerText:
-	text_far _GameDesignerText
-	text_end
+.GameDesigner
+	TX_FAR _GameDesignerText
+	db "@"
 
-.CompletedDexText:
-	text_far _CompletedDexText
-	text_promptbutton
-	text_asm
-	callfar DisplayDiploma
-	ld a, TRUE
+.CompletedDexText
+	TX_FAR _CompletedDexText
+	TX_BLINK
+	TX_ASM
+	callab DisplayDiploma
+	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	jp TextScriptEnd
 
 GameFreakPCText1:
-	text_far _CeladonMansion3Text5
-	text_end
+	TX_FAR _CeladonMansion3Text5
+	db "@"
 
 GameFreakPCText2:
-	text_far _CeladonMansion3Text6
-	text_end
+	TX_FAR _CeladonMansion3Text6
+	db "@"
 
 GameFreakPCText3:
-	text_far _CeladonMansion3Text7
-	text_end
+	TX_FAR _CeladonMansion3Text7
+	db "@"
 
 GameFreakSignText:
-	text_far _CeladonMansion3Text8
-	text_end
+	TX_FAR _CeladonMansion3Text8
+	db "@"

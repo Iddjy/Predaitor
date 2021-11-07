@@ -45,7 +45,7 @@ HallofFameRoomScript2:
 	ld [wHallOfFameCurScript], a
 	ld a, PALLET_TOWN
 	ld [wLastBlackoutMap], a
-	farcall SaveSAVtoSRAM
+	callba SaveSAVtoSRAM
 	ld b, 5
 .delayLoop
 	ld c, 600 / 5
@@ -69,8 +69,8 @@ HallofFameRoomScript0:
 	ret
 
 RLEMovement5a528:
-	db D_UP, 5
-	db -1 ; end
+	db D_UP,$5
+	db $ff
 
 HallofFameRoomScript1:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -79,10 +79,10 @@ HallofFameRoomScript1:
 	ld a, PLAYER_DIR_RIGHT
 	ld [wPlayerMovingDirection], a
 	ld a, $1
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	call SetSpriteMovementBytesToFF
 	ld a, SPRITE_FACING_LEFT
-	ldh [hSpriteFacingDirection], a
+	ld [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
 	call Delay3
 	xor a
@@ -90,7 +90,7 @@ HallofFameRoomScript1:
 	inc a ; PLAYER_DIR_RIGHT
 	ld [wPlayerMovingDirection], a
 	ld a, $1
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	ld a, $ff
 	ld [wJoyIgnore], a
@@ -105,5 +105,5 @@ HallOfFame_TextPointers:
 	dw HallofFameRoomText1
 
 HallofFameRoomText1:
-	text_far _HallofFameRoomText1
-	text_end
+	TX_FAR _HallofFameRoomText1
+	db "@"

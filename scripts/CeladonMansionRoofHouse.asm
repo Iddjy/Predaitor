@@ -6,16 +6,16 @@ CeladonMansionRoofHouse_TextPointers:
 	dw CeladonMansion5Text2
 
 CeladonMansion5Text1:
-	text_far _CeladonMansion5Text1
-	text_end
+	TX_FAR _CeladonMansion5Text1
+	db "@"
 
 CeladonMansion5Text2:
-	text_asm
+	TX_ASM
 	lb bc, EEVEE, 25
 	call GivePokemon
-	jr nc, .party_full
+	jr nc, .asm_24365
 	ld a, HS_CELADON_MANSION_EEVEE_GIFT
 	ld [wMissableObjectIndex], a
 	predef HideObject
-.party_full
+.asm_24365
 	jp TextScriptEnd

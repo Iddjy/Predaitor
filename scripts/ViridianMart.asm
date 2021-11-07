@@ -7,12 +7,12 @@ ViridianMart_Script:
 
 ViridianMartScript_1d47d:
 	CheckEvent EVENT_OAK_GOT_PARCEL
-	jr nz, .delivered_parcel
+	jr nz, .asm_1d489
 	ld hl, ViridianMart_TextPointers
-	jr .done
-.delivered_parcel
+	jr .asm_1d48c
+.asm_1d489
 	ld hl, ViridianMart_TextPointers2
-.done
+.asm_1d48c
 	ld a, l
 	ld [wMapTextPtr], a
 	ld a, h
@@ -27,7 +27,7 @@ ViridianMart_ScriptPointers:
 ViridianMartScript0:
 	call UpdateSprites
 	ld a, $4
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	ld hl, wSimulatedJoypadStatesEnd
 	ld de, RLEMovement1d4bb
@@ -40,9 +40,9 @@ ViridianMartScript0:
 	ret
 
 RLEMovement1d4bb:
-	db D_LEFT, 1
-	db D_UP, 2
-	db -1 ; end
+	db D_LEFT, $01
+	db D_UP, $02
+	db $ff
 
 ViridianMartScript1:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -50,7 +50,7 @@ ViridianMartScript1:
 	ret nz
 	call Delay3
 	ld a, $5
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	lb bc, OAKS_PARCEL, 1
 	call GiveItem
@@ -67,29 +67,28 @@ ViridianMart_TextPointers:
 	dw ViridianMartText3
 	dw ViridianMartText4
 	dw ViridianMartText5
-
 ViridianMart_TextPointers2:
 	dw ViridianCashierText
 	dw ViridianMartText2
 	dw ViridianMartText3
 
 ViridianMartText1:
-	text_far _ViridianMartText1
-	text_end
+	TX_FAR _ViridianMartText1
+	db "@"
 
 ViridianMartText4:
-	text_far _ViridianMartText4
-	text_end
+	TX_FAR _ViridianMartText4
+	db "@"
 
 ViridianMartText5:
-	text_far ViridianMartParcelQuestText
-	sound_get_key_item
-	text_end
+	TX_FAR ViridianMartParcelQuestText
+	TX_SFX_KEY_ITEM
+	db "@"
 
 ViridianMartText2:
-	text_far _ViridianMartText2
-	text_end
+	TX_FAR _ViridianMartText2
+	db "@"
 
 ViridianMartText3:
-	text_far _ViridianMartText3
-	text_end
+	TX_FAR _ViridianMartText3
+	db "@"

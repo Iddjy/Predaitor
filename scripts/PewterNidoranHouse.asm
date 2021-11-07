@@ -7,17 +7,17 @@ PewterNidoranHouse_TextPointers:
 	dw PewterHouse1Text3
 
 PewterHouse1Text1:
-	text_far _PewterHouse1Text1
-	text_asm
+	TX_FAR _PewterHouse1Text1
+	TX_ASM
 	ld a, NIDORAN_M
 	call PlayCry
 	call WaitForSoundToFinish
 	jp TextScriptEnd
 
 PewterHouse1Text2:
-	text_far _PewterHouse1Text2
-	text_end
+	TX_FAR _PewterHouse1Text2
+	db "@"
 
 PewterHouse1Text3:
-	text_far _PewterHouse1Text3
-	text_end
+	TX_FAR _PewterHouse1Text3
+	db "@"

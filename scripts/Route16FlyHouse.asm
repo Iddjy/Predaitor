@@ -6,43 +6,43 @@ Route16FlyHouse_TextPointers:
 	dw Route16HouseText2
 
 Route16HouseText1:
-	text_asm
+	TX_ASM
 	CheckEvent EVENT_GOT_HM02
 	ld hl, HM02ExplanationText
-	jr nz, .got_item
+	jr nz, .asm_13616
 	ld hl, Route16HouseText3
 	call PrintText
-	lb bc, HM_FLY, 1
+	lb bc, HM_02, 1
 	call GiveItem
-	jr nc, .bag_full
+	jr nc, .BagFull
 	SetEvent EVENT_GOT_HM02
 	ld hl, ReceivedHM02Text
-	jr .got_item
-.bag_full
+	jr .asm_13616
+.BagFull
 	ld hl, HM02NoRoomText
-.got_item
+.asm_13616
 	call PrintText
 	jp TextScriptEnd
 
 Route16HouseText3:
-	text_far _Route16HouseText3
-	text_end
+	TX_FAR _Route16HouseText3
+	db "@"
 
 ReceivedHM02Text:
-	text_far _ReceivedHM02Text
-	sound_get_key_item
-	text_end
+	TX_FAR _ReceivedHM02Text
+	TX_SFX_KEY_ITEM
+	db "@"
 
 HM02ExplanationText:
-	text_far _HM02ExplanationText
-	text_end
+	TX_FAR _HM02ExplanationText
+	db "@"
 
 HM02NoRoomText:
-	text_far _HM02NoRoomText
-	text_end
+	TX_FAR _HM02NoRoomText
+	db "@"
 
 Route16HouseText2:
-	text_asm
+	TX_ASM
 	ld hl, Route16HouseText_1e652
 	call PrintText
 	ld a, FEAROW
@@ -51,5 +51,5 @@ Route16HouseText2:
 	jp TextScriptEnd
 
 Route16HouseText_1e652:
-	text_far _Route16HouseText_1e652
-	text_end
+	TX_FAR _Route16HouseText_1e652
+	db "@"

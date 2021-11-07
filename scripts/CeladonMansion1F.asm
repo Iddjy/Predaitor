@@ -8,32 +8,32 @@ CeladonMansion1F_TextPointers:
 	dw CeladonMansion1Text4
 	dw CeladonMansion1Text5
 
-CeladonMansion1_PlayCryScript:
+CeladonMansion1_486a1:
 	call PlayCry
 	jp TextScriptEnd
 
 CeladonMansion1Text1:
-	text_far _CeladonMansion1Text1
-	text_asm
+	TX_FAR _CeladonMansion1Text1
+	TX_ASM
 	ld a, MEOWTH
-	jp CeladonMansion1_PlayCryScript
+	jp CeladonMansion1_486a1
 
 CeladonMansion1Text2:
-	text_far _CeladonMansion1Text2
-	text_end
+	TX_FAR _CeladonMansion1Text2
+	db "@"
 
 CeladonMansion1Text3:
-	text_far _CeladonMansion1Text3
-	text_asm
+	TX_FAR _CeladonMansion1Text3
+	TX_ASM
 	ld a, CLEFAIRY
-	jp CeladonMansion1_PlayCryScript
+	jp CeladonMansion1_486a1
 
 CeladonMansion1Text4:
-	text_far _CeladonMansion1Text4
-	text_asm
+	TX_FAR _CeladonMansion1Text4
+	TX_ASM
 	ld a, NIDORAN_F
-	jp CeladonMansion1_PlayCryScript
+	jp CeladonMansion1_486a1
 
 CeladonMansion1Text5:
-	text_far _CeladonMansion1Text5
-	text_end
+	TX_FAR _CeladonMansion1Text5
+	db "@"

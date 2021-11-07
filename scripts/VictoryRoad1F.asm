@@ -4,7 +4,7 @@ VictoryRoad1F_Script:
 	res 5, [hl]
 	call nz, .next
 	call EnableAutoTextBoxDrawing
-	ld hl, VictoryRoad1TrainerHeaders
+	ld hl, VictoryRoad1TrainerHeader0
 	ld de, VictoryRoad1F_ScriptPointers
 	ld a, [wVictoryRoad1FCurScript]
 	call ExecuteCurMapScriptInTable
@@ -35,8 +35,7 @@ VictoryRoad1Script0:
 	ret
 
 CoordsData_5da5c:
-	dbmapcoord 17, 13
-	db -1 ; end
+	db $0D,$11,$FF
 
 VictoryRoad1F_TextPointers:
 	dw VictoryRoad1Text1
@@ -47,46 +46,58 @@ VictoryRoad1F_TextPointers:
 	dw BoulderText
 	dw BoulderText
 
-VictoryRoad1TrainerHeaders:
-	def_trainers
 VictoryRoad1TrainerHeader0:
-	trainer EVENT_BEAT_VICTORY_ROAD_1_TRAINER_0, 2, VictoryRoad1BattleText1, VictoryRoad1EndBattleText1, VictoryRoad1AfterBattleText1
+	dbEventFlagBit EVENT_BEAT_VICTORY_ROAD_1_TRAINER_0
+	db ($2 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_VICTORY_ROAD_1_TRAINER_0
+	dw VictoryRoad1BattleText1 ; TextBeforeBattle
+	dw VictoryRoad1AfterBattleText1 ; TextAfterBattle
+	dw VictoryRoad1EndBattleText1 ; TextEndBattle
+	dw VictoryRoad1EndBattleText1 ; TextEndBattle
+
 VictoryRoad1TrainerHeader1:
-	trainer EVENT_BEAT_VICTORY_ROAD_1_TRAINER_1, 2, VictoryRoad1BattleText2, VictoryRoad1EndBattleText2, VictoryRoad1AfterBattleText2
-	db -1 ; end
+	dbEventFlagBit EVENT_BEAT_VICTORY_ROAD_1_TRAINER_1
+	db ($2 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_VICTORY_ROAD_1_TRAINER_1
+	dw VictoryRoad1BattleText2 ; TextBeforeBattle
+	dw VictoryRoad1AfterBattleText2 ; TextAfterBattle
+	dw VictoryRoad1EndBattleText2 ; TextEndBattle
+	dw VictoryRoad1EndBattleText2 ; TextEndBattle
+
+	db $ff
 
 VictoryRoad1Text1:
-	text_asm
+	TX_ASM
 	ld hl, VictoryRoad1TrainerHeader0
 	call TalkToTrainer
 	jp TextScriptEnd
 
 VictoryRoad1Text2:
-	text_asm
+	TX_ASM
 	ld hl, VictoryRoad1TrainerHeader1
 	call TalkToTrainer
 	jp TextScriptEnd
 
 VictoryRoad1BattleText1:
-	text_far _VictoryRoad1BattleText1
-	text_end
+	TX_FAR _VictoryRoad1BattleText1
+	db "@"
 
 VictoryRoad1EndBattleText1:
-	text_far _VictoryRoad1EndBattleText1
-	text_end
+	TX_FAR _VictoryRoad1EndBattleText1
+	db "@"
 
 VictoryRoad1AfterBattleText1:
-	text_far _VictoryRoad1AfterBattleText1
-	text_end
+	TX_FAR _VictoryRoad1AfterBattleText1
+	db "@"
 
 VictoryRoad1BattleText2:
-	text_far _VictoryRoad1BattleText2
-	text_end
+	TX_FAR _VictoryRoad1BattleText2
+	db "@"
 
 VictoryRoad1EndBattleText2:
-	text_far _VictoryRoad1EndBattleText2
-	text_end
+	TX_FAR _VictoryRoad1EndBattleText2
+	db "@"
 
 VictoryRoad1AfterBattleText2:
-	text_far _VictoryRoad1AfterBattleText2
-	text_end
+	TX_FAR _VictoryRoad1AfterBattleText2
+	db "@"

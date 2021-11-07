@@ -1,7 +1,7 @@
 LoreleisRoom_Script:
 	call LoreleiShowOrHideExitBlock
 	call EnableAutoTextBoxDrawing
-	ld hl, LoreleisRoomTrainerHeaders
+	ld hl, LoreleiTrainerHeader0
 	ld de, LoreleisRoom_ScriptPointers
 	ld a, [wLoreleisRoomCurScript]
 	call ExecuteCurMapScriptInTable
@@ -65,8 +65,8 @@ LoreleiScript0:
 	call ArePlayerCoordsInArray
 	jp nc, CheckFightingMapTrainers
 	xor a
-	ldh [hJoyPressed], a
-	ldh [hJoyHeld], a
+	ld [hJoyPressed], a
+	ld [hJoyHeld], a
 	ld [wSimulatedJoypadStatesEnd], a
 	ld [wSimulatedJoypadStatesIndex], a
 	ld a, [wCoordIndex]
@@ -76,7 +76,7 @@ LoreleiScript0:
 	jr z, LoreleiScriptWalkIntoRoom
 .stopPlayerFromLeaving
 	ld a, $2
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID  ; "Don't run away!"
 	ld a, D_UP
 	ld [wSimulatedJoypadStatesEnd], a
@@ -89,11 +89,11 @@ LoreleiScript0:
 	ret
 
 LoreleiEntranceCoords:
-	dbmapcoord  4, 10
-	dbmapcoord  5, 10
-	dbmapcoord  4, 11
-	dbmapcoord  5, 11
-	db -1 ; end
+	db $0A,$04
+	db $0A,$05
+	db $0B,$04
+	db $0B,$05
+	db $FF
 
 LoreleiScript3:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -112,37 +112,42 @@ LoreleiScript2:
 	cp $ff
 	jp z, ResetLoreleiScript
 	ld a, $1
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	jp DisplayTextID
 
 LoreleisRoom_TextPointers:
 	dw LoreleiText1
 	dw LoreleiDontRunAwayText
 
-LoreleisRoomTrainerHeaders:
-	def_trainers
-LoreleisRoomTrainerHeader0:
-	trainer EVENT_BEAT_LORELEIS_ROOM_TRAINER_0, 0, LoreleiBeforeBattleText, LoreleiEndBattleText, LoreleiAfterBattleText
-	db -1 ; end
+LoreleiTrainerHeader0:
+	dbEventFlagBit EVENT_BEAT_LORELEIS_ROOM_TRAINER_0
+	db ($0 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_LORELEIS_ROOM_TRAINER_0
+	dw LoreleiBeforeBattleText ; TextBeforeBattle
+	dw LoreleiAfterBattleText ; TextAfterBattle
+	dw LoreleiEndBattleText ; TextEndBattle
+	dw LoreleiEndBattleText ; TextEndBattle
+
+	db $ff
 
 LoreleiText1:
-	text_asm
-	ld hl, LoreleisRoomTrainerHeader0
+	TX_ASM
+	ld hl, LoreleiTrainerHeader0
 	call TalkToTrainer
 	jp TextScriptEnd
 
 LoreleiBeforeBattleText:
-	text_far _LoreleiBeforeBattleText
-	text_end
+	TX_FAR _LoreleiBeforeBattleText
+	db "@"
 
 LoreleiEndBattleText:
-	text_far _LoreleiEndBattleText
-	text_end
+	TX_FAR _LoreleiEndBattleText
+	db "@"
 
 LoreleiAfterBattleText:
-	text_far _LoreleiAfterBattleText
-	text_end
+	TX_FAR _LoreleiAfterBattleText
+	db "@"
 
 LoreleiDontRunAwayText:
-	text_far _LoreleiDontRunAwayText
-	text_end
+	TX_FAR _LoreleiDontRunAwayText
+	db "@"

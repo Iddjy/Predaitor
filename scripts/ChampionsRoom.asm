@@ -40,10 +40,10 @@ GaryScript1:
 	ret
 
 GaryEntrance_RLEMovement:
-	db D_UP, 1
-	db D_RIGHT, 1
-	db D_UP, 3
-	db -1 ; end
+	db D_UP,1
+	db D_RIGHT,1
+	db D_UP,3
+	db $ff
 
 GaryScript2:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -55,7 +55,7 @@ GaryScript2:
 	ld hl, wOptions
 	res 7, [hl]  ; Turn on battle animations to make the battle feel more epic.
 	ld a, $1
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	call Delay3
 	ld hl, wd72d
@@ -64,7 +64,7 @@ GaryScript2:
 	ld hl, GaryDefeatedText
 	ld de, GaryVictoryText
 	call SaveEndBattleTextPointers
-	ld a, OPP_RIVAL3
+	ld a, OPP_SONY3
 	ld [wCurOpponent], a
 
 	; select which team to use during the encounter
@@ -84,7 +84,7 @@ GaryScript2:
 	ld [wTrainerNo], a
 
 	xor a
-	ldh [hJoyHeld], a
+	ld [hJoyHeld], a
 	ld a, $3
 	ld [wChampionsRoomCurScript], a
 	ret
@@ -98,26 +98,26 @@ GaryScript3:
 	ld a, $f0
 	ld [wJoyIgnore], a
 	ld a, $1
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call GaryScript_760c8
 	ld a, $1
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	call SetSpriteMovementBytesToFF
 	ld a, $4
 	ld [wChampionsRoomCurScript], a
 	ret
 
 GaryScript4:
-	farcall Music_Cities1AlternateTempo
+	callba Music_Cities1AlternateTempo
 	ld a, $2
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call GaryScript_760c8
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	call SetSpriteMovementBytesToFF
 	ld de, OakEntranceAfterVictoryMovement
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	call MoveSprite
 	ld a, HS_CHAMPIONS_ROOM_OAK
 	ld [wMissableObjectIndex], a
@@ -132,7 +132,7 @@ OakEntranceAfterVictoryMovement:
 	db NPC_MOVEMENT_UP
 	db NPC_MOVEMENT_UP
 	db NPC_MOVEMENT_UP
-	db -1 ; end
+	db $FF
 
 GaryScript5:
 	ld a, [wd730]
@@ -141,17 +141,17 @@ GaryScript5:
 	ld a, PLAYER_DIR_LEFT
 	ld [wPlayerMovingDirection], a
 	ld a, $1
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	ld a, SPRITE_FACING_LEFT
-	ldh [hSpriteFacingDirection], a
+	ld [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	xor a ; SPRITE_FACING_DOWN
-	ldh [hSpriteFacingDirection], a
+	ld [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
 	ld a, $3
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call GaryScript_760c8
 	ld a, $6
 	ld [wChampionsRoomCurScript], a
@@ -159,12 +159,12 @@ GaryScript5:
 
 GaryScript6:
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	ld a, SPRITE_FACING_RIGHT
-	ldh [hSpriteFacingDirection], a
+	ld [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
 	ld a, $4
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call GaryScript_760c8
 	ld a, $7
 	ld [wChampionsRoomCurScript], a
@@ -172,16 +172,16 @@ GaryScript6:
 
 GaryScript7:
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	xor a ; SPRITE_FACING_DOWN
-	ldh [hSpriteFacingDirection], a
+	ld [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
 	ld a, $5
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call GaryScript_760c8
 	ld de, OakExitGaryRoomMovement
 	ld a, $2
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	call MoveSprite
 	ld a, $8
 	ld [wChampionsRoomCurScript], a
@@ -190,7 +190,7 @@ GaryScript7:
 OakExitGaryRoomMovement:
 	db NPC_MOVEMENT_UP
 	db NPC_MOVEMENT_UP
-	db -1 ; end
+	db $FF
 
 GaryScript8:
 	ld a, [wd730]
@@ -217,9 +217,9 @@ GaryScript9:
 	ret
 
 WalkToHallOfFame_RLEMovment:
-	db D_UP, 4
-	db D_LEFT, 1
-	db -1 ; end
+	db D_UP,4
+	db D_LEFT,1
+	db $ff
 
 GaryScript10:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -247,7 +247,7 @@ ChampionsRoom_TextPointers:
 	dw GaryText5
 
 GaryText1:
-	text_asm
+	TX_ASM
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	ld hl, GaryChampionIntroText
 	jr z, .printText
@@ -257,27 +257,27 @@ GaryText1:
 	jp TextScriptEnd
 
 GaryChampionIntroText:
-	text_far _GaryChampionIntroText
-	text_end
+	TX_FAR _GaryChampionIntroText
+	db "@"
 
 GaryDefeatedText:
-	text_far _GaryDefeatedText
-	text_end
+	TX_FAR _GaryDefeatedText
+	db "@"
 
 GaryVictoryText:
-	text_far _GaryVictoryText
-	text_end
+	TX_FAR _GaryVictoryText
+	db "@"
 
 GaryText_76103:
-	text_far _GaryText_76103
-	text_end
+	TX_FAR _GaryText_76103
+	db "@"
 
 GaryText2:
-	text_far _GaryText2
-	text_end
+	TX_FAR _GaryText2
+	db "@"
 
 GaryText3:
-	text_asm
+	TX_ASM
 	ld a, [wPlayerStarter]
 	ld [wd11e], a
 	call GetMonName
@@ -286,13 +286,13 @@ GaryText3:
 	jp TextScriptEnd
 
 GaryText_76120:
-	text_far _GaryText_76120
-	text_end
+	TX_FAR _GaryText_76120
+	db "@"
 
 GaryText4:
-	text_far _GaryText_76125
-	text_end
+	TX_FAR _GaryText_76125
+	db "@"
 
 GaryText5:
-	text_far _GaryText_7612a
-	text_end
+	TX_FAR _GaryText_7612a
+	db "@"

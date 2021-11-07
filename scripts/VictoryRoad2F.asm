@@ -8,7 +8,7 @@ VictoryRoad2F_Script:
 	res 5, [hl]
 	call nz, VictoryRoad2Script_517c9
 	call EnableAutoTextBoxDrawing
-	ld hl, VictoryRoad2TrainerHeaders
+	ld hl, VictoryRoad2TrainerHeader0
 	ld de, VictoryRoad2F_ScriptPointers
 	ld a, [wVictoryRoad2FCurScript]
 	call ExecuteCurMapScriptInTable
@@ -17,6 +17,7 @@ VictoryRoad2F_Script:
 
 VictoryRoad2Script_517c4:
 	ResetEvent EVENT_VICTORY_ROAD_1_BOULDER_ON_SWITCH
+
 VictoryRoad2Script_517c9:
 	CheckEvent EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH1
 	jr z, .asm_517da
@@ -30,6 +31,7 @@ VictoryRoad2Script_517c9:
 	ret z
 	ld a, $1d
 	lb bc, 7, 11
+
 VictoryRoad2Script_517e2:
 	ld [wNewTileBlockID], a
 	predef ReplaceTileBlock
@@ -62,9 +64,9 @@ VictoryRoad2Script0:
 	ret
 
 CoordsData_51816:
-	dbmapcoord  1, 16
-	dbmapcoord  9, 16
-	db -1 ; end
+	db $10,$01
+	db $10,$09
+	db $FF
 
 VictoryRoad2F_TextPointers:
 	dw VictoryRoad2Text1
@@ -81,122 +83,162 @@ VictoryRoad2F_TextPointers:
 	dw BoulderText
 	dw BoulderText
 
-VictoryRoad2TrainerHeaders:
-	def_trainers
 VictoryRoad2TrainerHeader0:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_0, 4, VictoryRoad2BattleText1, VictoryRoad2EndBattleText1, VictoryRoad2AfterBattleText1
+	dbEventFlagBit EVENT_BEAT_VICTORY_ROAD_2_TRAINER_0
+	db ($4 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_VICTORY_ROAD_2_TRAINER_0
+	dw VictoryRoad2BattleText1 ; TextBeforeBattle
+	dw VictoryRoad2AfterBattleText1 ; TextAfterBattle
+	dw VictoryRoad2EndBattleText1 ; TextEndBattle
+	dw VictoryRoad2EndBattleText1 ; TextEndBattle
+
 VictoryRoad2TrainerHeader1:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_1, 3, VictoryRoad2BattleText2, VictoryRoad2EndBattleText2, VictoryRoad2AfterBattleText2
+	dbEventFlagBit EVENT_BEAT_VICTORY_ROAD_2_TRAINER_1
+	db ($3 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_VICTORY_ROAD_2_TRAINER_1
+	dw VictoryRoad2BattleText2 ; TextBeforeBattle
+	dw VictoryRoad2AfterBattleText2 ; TextAfterBattle
+	dw VictoryRoad2EndBattleText2 ; TextEndBattle
+	dw VictoryRoad2EndBattleText2 ; TextEndBattle
+
 VictoryRoad2TrainerHeader2:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_2, 3, VictoryRoad2BattleText3, VictoryRoad2EndBattleText3, VictoryRoad2AfterBattleText3
+	dbEventFlagBit EVENT_BEAT_VICTORY_ROAD_2_TRAINER_2
+	db ($3 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_VICTORY_ROAD_2_TRAINER_2
+	dw VictoryRoad2BattleText3 ; TextBeforeBattle
+	dw VictoryRoad2AfterBattleText3 ; TextAfterBattle
+	dw VictoryRoad2EndBattleText3 ; TextEndBattle
+	dw VictoryRoad2EndBattleText3 ; TextEndBattle
+
 VictoryRoad2TrainerHeader3:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_3, 1, VictoryRoad2BattleText4, VictoryRoad2EndBattleText4, VictoryRoad2AfterBattleText4
+	dbEventFlagBit EVENT_BEAT_VICTORY_ROAD_2_TRAINER_3
+	db ($1 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_VICTORY_ROAD_2_TRAINER_3
+	dw VictoryRoad2BattleText4 ; TextBeforeBattle
+	dw VictoryRoad2AfterBattleText4 ; TextAfterBattle
+	dw VictoryRoad2EndBattleText4 ; TextEndBattle
+	dw VictoryRoad2EndBattleText4 ; TextEndBattle
+
 VictoryRoad2TrainerHeader4:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_4, 3, VictoryRoad2BattleText5, VictoryRoad2EndBattleText5, VictoryRoad2AfterBattleText5
+	dbEventFlagBit EVENT_BEAT_VICTORY_ROAD_2_TRAINER_4
+	db ($3 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_VICTORY_ROAD_2_TRAINER_4
+	dw VictoryRoad2BattleText5 ; TextBeforeBattle
+	dw VictoryRoad2AfterBattleText5 ; TextAfterBattle
+	dw VictoryRoad2EndBattleText5 ; TextEndBattle
+	dw VictoryRoad2EndBattleText5 ; TextEndBattle
+
 MoltresTrainerHeader:
-	trainer EVENT_BEAT_MOLTRES, 0, MoltresBattleText, MoltresBattleText, MoltresBattleText
-	db -1 ; end
+	dbEventFlagBit EVENT_BEAT_MOLTRES
+	db ($0 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_MOLTRES
+	dw MoltresBattleText ; TextBeforeBattle
+	dw MoltresBattleText ; TextAfterBattle
+	dw MoltresBattleText ; TextEndBattle
+	dw MoltresBattleText ; TextEndBattle
+
+	db $ff
 
 VictoryRoad2Text1:
-	text_asm
+	TX_ASM
 	ld hl, VictoryRoad2TrainerHeader0
 	call TalkToTrainer
 	jp TextScriptEnd
 
 VictoryRoad2Text2:
-	text_asm
+	TX_ASM
 	ld hl, VictoryRoad2TrainerHeader1
 	call TalkToTrainer
 	jp TextScriptEnd
 
 VictoryRoad2Text3:
-	text_asm
+	TX_ASM
 	ld hl, VictoryRoad2TrainerHeader2
 	call TalkToTrainer
 	jp TextScriptEnd
 
 VictoryRoad2Text4:
-	text_asm
+	TX_ASM
 	ld hl, VictoryRoad2TrainerHeader3
 	call TalkToTrainer
 	jp TextScriptEnd
 
 VictoryRoad2Text5:
-	text_asm
+	TX_ASM
 	ld hl, VictoryRoad2TrainerHeader4
 	call TalkToTrainer
 	jp TextScriptEnd
 
 MoltresText:
-	text_asm
+	TX_ASM
 	ld hl, MoltresTrainerHeader
 	call TalkToTrainer
 	jp TextScriptEnd
 
 MoltresBattleText:
-	text_far _MoltresBattleText
-	text_asm
+	TX_FAR _MoltresBattleText
+	TX_ASM
 	ld a, MOLTRES
 	call PlayCry
 	call WaitForSoundToFinish
 	jp TextScriptEnd
 
 VictoryRoad2BattleText1:
-	text_far _VictoryRoad2BattleText1
-	text_end
+	TX_FAR _VictoryRoad2BattleText1
+	db "@"
 
 VictoryRoad2EndBattleText1:
-	text_far _VictoryRoad2EndBattleText1
-	text_end
+	TX_FAR _VictoryRoad2EndBattleText1
+	db "@"
 
 VictoryRoad2AfterBattleText1:
-	text_far _VictoryRoad2AfterBattleText1
-	text_end
+	TX_FAR _VictoryRoad2AfterBattleText1
+	db "@"
 
 VictoryRoad2BattleText2:
-	text_far _VictoryRoad2BattleText2
-	text_end
+	TX_FAR _VictoryRoad2BattleText2
+	db "@"
 
 VictoryRoad2EndBattleText2:
-	text_far _VictoryRoad2EndBattleText2
-	text_end
+	TX_FAR _VictoryRoad2EndBattleText2
+	db "@"
 
 VictoryRoad2AfterBattleText2:
-	text_far _VictoryRoad2AfterBattleText2
-	text_end
+	TX_FAR _VictoryRoad2AfterBattleText2
+	db "@"
 
 VictoryRoad2BattleText3:
-	text_far _VictoryRoad2BattleText3
-	text_end
+	TX_FAR _VictoryRoad2BattleText3
+	db "@"
 
 VictoryRoad2EndBattleText3:
-	text_far _VictoryRoad2EndBattleText3
-	text_end
+	TX_FAR _VictoryRoad2EndBattleText3
+	db "@"
 
 VictoryRoad2AfterBattleText3:
-	text_far _VictoryRoad2AfterBattleText3
-	text_end
+	TX_FAR _VictoryRoad2AfterBattleText3
+	db "@"
 
 VictoryRoad2BattleText4:
-	text_far _VictoryRoad2BattleText4
-	text_end
+	TX_FAR _VictoryRoad2BattleText4
+	db "@"
 
 VictoryRoad2EndBattleText4:
-	text_far _VictoryRoad2EndBattleText4
-	text_end
+	TX_FAR _VictoryRoad2EndBattleText4
+	db "@"
 
 VictoryRoad2AfterBattleText4:
-	text_far _VictoryRoad2AfterBattleText4
-	text_end
+	TX_FAR _VictoryRoad2AfterBattleText4
+	db "@"
 
 VictoryRoad2BattleText5:
-	text_far _VictoryRoad2BattleText5
-	text_end
+	TX_FAR _VictoryRoad2BattleText5
+	db "@"
 
 VictoryRoad2EndBattleText5:
-	text_far _VictoryRoad2EndBattleText5
-	text_end
+	TX_FAR _VictoryRoad2EndBattleText5
+	db "@"
 
 VictoryRoad2AfterBattleText5:
-	text_far _VictoryRoad2AfterBattleText5
-	text_end
+	TX_FAR _VictoryRoad2AfterBattleText5
+	db "@"

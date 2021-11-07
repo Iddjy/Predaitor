@@ -9,15 +9,15 @@ CeruleanPokecenter_TextPointers:
 	dw CeruleanTradeNurseText
 
 CeruleanTradeNurseText:
-	script_cable_club_receptionist
+	TX_CABLE_CLUB_RECEPTIONIST
 
 CeruleanHealNurseText:
-	script_pokecenter_nurse
+	TX_POKECENTER_NURSE
 
 CeruleanPokecenterText2:
-	text_far _CeruleanPokecenterText2
-	text_end
+	TX_FAR _CeruleanPokecenterText2
+	db "@"
 
 CeruleanPokecenterText3:
-	text_far _CeruleanPokecenterText3
-	text_end
+	TX_FAR _CeruleanPokecenterText3
+	db "@"

@@ -1,7 +1,7 @@
 SilphCo8F_Script:
 	call SilphCo8Script_5651a
 	call EnableAutoTextBoxDrawing
-	ld hl, SilphCo8TrainerHeaders
+	ld hl, SilphCo8TrainerHeader0
 	ld de, SilphCo8F_ScriptPointers
 	ld a, [wSilphCo8FCurScript]
 	call ExecuteCurMapScriptInTable
@@ -24,8 +24,8 @@ SilphCo8Script_5651a:
 	predef_jump ReplaceTileBlock
 
 SilphCo8GateCoords:
-	dbmapcoord  3,  4
-	db -1 ; end
+	db $04,$03
+	db $FF
 
 SilphCo8Script_56541:
 	push hl
@@ -35,14 +35,14 @@ SilphCo8Script_56541:
 	ld a, [hl]
 	ld c, a
 	xor a
-	ldh [hUnlockedSilphCoDoors], a
+	ld [$ffe0], a
 	pop hl
 .asm_5654d
 	ld a, [hli]
 	cp $ff
 	jr z, .asm_56569
 	push hl
-	ld hl, hUnlockedSilphCoDoors
+	ld hl, $ffe0
 	inc [hl]
 	pop hl
 	cp b
@@ -60,11 +60,11 @@ SilphCo8Script_56541:
 	ret
 .asm_56569
 	xor a
-	ldh [hUnlockedSilphCoDoors], a
+	ld [$ffe0], a
 	ret
 
 SilphCo8Script_5656d:
-	ldh a, [hUnlockedSilphCoDoors]
+	ld a, [$ffe0]
 	and a
 	ret z
 	SetEvent EVENT_SILPH_CO_8_UNLOCKED_DOOR
@@ -81,18 +81,37 @@ SilphCo8F_TextPointers:
 	dw SilphCo8Text3
 	dw SilphCo8Text4
 
-SilphCo8TrainerHeaders:
-	def_trainers 2
 SilphCo8TrainerHeader0:
-	trainer EVENT_BEAT_SILPH_CO_8F_TRAINER_0, 4, SilphCo8BattleText1, SilphCo8EndBattleText1, SilphCo8AfterBattleText1
+	dbEventFlagBit EVENT_BEAT_SILPH_CO_8F_TRAINER_0
+	db ($4 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_SILPH_CO_8F_TRAINER_0
+	dw SilphCo8BattleText1 ; TextBeforeBattle
+	dw SilphCo8AfterBattleText1 ; TextAfterBattle
+	dw SilphCo8EndBattleText1 ; TextEndBattle
+	dw SilphCo8EndBattleText1 ; TextEndBattle
+
 SilphCo8TrainerHeader1:
-	trainer EVENT_BEAT_SILPH_CO_8F_TRAINER_1, 4, SilphCo8BattleText2, SilphCo8EndBattleText2, SilphCo8AfterBattleText2
+	dbEventFlagBit EVENT_BEAT_SILPH_CO_8F_TRAINER_1
+	db ($4 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_SILPH_CO_8F_TRAINER_1
+	dw SilphCo8BattleText2 ; TextBeforeBattle
+	dw SilphCo8AfterBattleText2 ; TextAfterBattle
+	dw SilphCo8EndBattleText2 ; TextEndBattle
+	dw SilphCo8EndBattleText2 ; TextEndBattle
+
 SilphCo8TrainerHeader2:
-	trainer EVENT_BEAT_SILPH_CO_8F_TRAINER_2, 4, SilphCo8BattleText3, SilphCo8EndBattleText3, SilphCo8AfterBattleText3
-	db -1 ; end
+	dbEventFlagBit EVENT_BEAT_SILPH_CO_8F_TRAINER_2
+	db ($4 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_SILPH_CO_8F_TRAINER_2
+	dw SilphCo8BattleText3 ; TextBeforeBattle
+	dw SilphCo8AfterBattleText3 ; TextAfterBattle
+	dw SilphCo8EndBattleText3 ; TextEndBattle
+	dw SilphCo8EndBattleText3 ; TextEndBattle
+
+	db $ff
 
 SilphCo8Text1:
-	text_asm
+	TX_ASM
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	ld hl, SilphCo8Text_565c3
 	jr nz, .asm_565b8
@@ -102,63 +121,63 @@ SilphCo8Text1:
 	jp TextScriptEnd
 
 SilphCo8Text_565be:
-	text_far _SilphCo8Text_565be
-	text_end
+	TX_FAR _SilphCo8Text_565be
+	db "@"
 
 SilphCo8Text_565c3:
-	text_far _SilphCo8Text_565c3
-	text_end
+	TX_FAR _SilphCo8Text_565c3
+	db "@"
 
 SilphCo8Text2:
-	text_asm
+	TX_ASM
 	ld hl, SilphCo8TrainerHeader0
 	call TalkToTrainer
 	jp TextScriptEnd
 
 SilphCo8Text3:
-	text_asm
+	TX_ASM
 	ld hl, SilphCo8TrainerHeader1
 	call TalkToTrainer
 	jp TextScriptEnd
 
 SilphCo8Text4:
-	text_asm
+	TX_ASM
 	ld hl, SilphCo8TrainerHeader2
 	call TalkToTrainer
 	jp TextScriptEnd
 
 SilphCo8BattleText1:
-	text_far _SilphCo8BattleText1
-	text_end
+	TX_FAR _SilphCo8BattleText1
+	db "@"
 
 SilphCo8EndBattleText1:
-	text_far _SilphCo8EndBattleText1
-	text_end
+	TX_FAR _SilphCo8EndBattleText1
+	db "@"
 
 SilphCo8AfterBattleText1:
-	text_far _SilphCo8AfterBattleText1
-	text_end
+	TX_FAR _SilphCo8AfterBattleText1
+	db "@"
 
 SilphCo8BattleText2:
-	text_far _SilphCo8BattleText2
-	text_end
+	TX_FAR _SilphCo8BattleText2
+	db "@"
 
 SilphCo8EndBattleText2:
-	text_far _SilphCo8EndBattleText2
-	text_end
+	TX_FAR _SilphCo8EndBattleText2
+	db "@"
 
 SilphCo8AfterBattleText2:
-	text_far _SilphCo8AfterBattleText2
-	text_end
+	TX_FAR _SilphCo8AfterBattleText2
+	db "@"
 
 SilphCo8BattleText3:
-	text_far _SilphCo8BattleText3
-	text_end
+	TX_FAR _SilphCo8BattleText3
+	db "@"
 
 SilphCo8EndBattleText3:
-	text_far _SilphCo8EndBattleText3
-	text_end
+	TX_FAR _SilphCo8EndBattleText3
+	db "@"
 
 SilphCo8AfterBattleText3:
-	text_far _SilphCo8AfterBattleText3
-	text_end
+	TX_FAR _SilphCo8AfterBattleText3
+	db "@"

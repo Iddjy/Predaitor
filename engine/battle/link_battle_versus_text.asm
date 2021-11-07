@@ -1,23 +1,18 @@
 ; display "[player] VS [enemy]" text box with pokeballs representing their parties next to the names
 DisplayLinkBattleVersusTextBox:
 	call LoadTextBoxTilePatterns
-	hlcoord 3, 4
-	ld b, 7
-	ld c, 12
-	call TextBoxBorder
-	hlcoord 4, 5
-	ld de, wPlayerName
+	coord hl, 8, 5							; IDDJY moved the text to the right
+	ld de, wTrainerName						; IDDJY swapped with wPlayerName
 	call PlaceString
-	hlcoord 4, 10
-	ld de, wLinkEnemyTrainerName
+	coord hl, 8, 10							; IDDJY moved the text to the right
+	ld de, wPlayerName						; IDDJY swapped with wTrainerName
 	call PlaceString
 ; place bold "VS" tiles between the names
-	hlcoord 9, 8
-	ld a, $69
+	coord hl, 12, 8							; IDDJY moved the text to the right
+	ld a, $6b								; IDDJY increased by 2 to take into account the new tileset
 	ld [hli], a
-	ld [hl], $6a
+	ld [hl], $6c							; IDDJY increased by 2 to take into account the new tileset
 	xor a
 	ld [wUpdateSpritesEnabled], a
-	callfar SetupPlayerAndEnemyPokeballs
-	ld c, 150
-	jp DelayFrames
+	callab SetupPlayerAndEnemyPokeballs
+	ret

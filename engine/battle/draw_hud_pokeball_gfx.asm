@@ -10,9 +10,14 @@ DrawEnemyPokeballs:
 	call LoadPartyPokeballGfx
 	jp SetupEnemyPartyPokeballs
 
+; IDDJY add this function to draw the player's pokeballs only
+DrawPlayerPokeballs:
+	call LoadPartyPokeballGfx
+	jp SetupOwnPartyPokeballs
+
 LoadPartyPokeballGfx:
 	ld de, PokeballTileGraphics
-	ld hl, vSprites tile $31
+	ld hl, vSprites + $310
 	lb bc, BANK(PokeballTileGraphics), (PokeballTileGraphicsEnd - PokeballTileGraphics) / $10
 	jp CopyVideoData
 
@@ -31,7 +36,7 @@ SetupOwnPartyPokeballs:
 	jp WritePokeballOAMData
 
 SetupEnemyPartyPokeballs:
-	call PlaceEnemyHUDTiles
+	call PlaceEnemyHUDTilesForBalls
 	ld hl, wEnemyMons
 	ld de, wEnemyPartyCount
 	call SetupPokeballs
@@ -117,11 +122,19 @@ WritePokeballOAMData:
 	ret
 
 PlacePlayerHUDTiles:
+	ld a, [wWhoIsAttacking]					; IDDJY
+	cp 1									; IDDJY
+	coord hl, 9, 7							; IDDJY
+	ld a, "▶"								; IDDJY
+	jr z, .next								; IDDJY
+	ld a, " "								; IDDJY
+.next										; IDDJY
+	ld [hl], a								; IDDJY
 	ld hl, PlayerBattleHUDGraphicsTiles
 	ld de, wHUDGraphicsTiles
 	ld bc, $3
 	call CopyData
-	hlcoord 18, 10
+	coord hl, 18, 10
 	ld de, -1
 	jr PlaceHUDTiles
 
@@ -131,12 +144,32 @@ PlayerBattleHUDGraphicsTiles:
 	db $77 ; lower-right corner tile of the HUD
 	db $6F ; lower-left triangle tile of the HUD
 
-PlaceEnemyHUDTiles:
+PlaceEnemyHUDTilesForBalls:
 	ld hl, EnemyBattleHUDGraphicsTiles
 	ld de, wHUDGraphicsTiles
 	ld bc, $3
 	call CopyData
-	hlcoord 1, 2
+	coord hl, 1, 2
+	ld de, $1
+	jr PlaceHUDTiles
+
+PlaceEnemyHUDTiles:
+	ld a, [wWhoIsAttacking]					; IDDJY
+	cp 2									; IDDJY
+	coord hl, 0, 0							; IDDJY
+	ld a, "▶"								; IDDJY
+	jr z, .next								; IDDJY
+	ld a, " "								; IDDJY
+.next										; IDDJY
+	ld [hl], a								; IDDJY
+	ld hl, EnemyBattleHUDGraphicsTiles
+	ld de, wHUDGraphicsTiles
+	ld bc, $3
+	call CopyData
+	coord hl, 1, 2
+	ld [hl], $73					; IDDJY vertical segment of HUD
+	ld bc, SCREEN_WIDTH				; IDDJY
+	add hl, bc						; IDDJY add a vertical segment to make room for the enemy's HP
 	ld de, $1
 	jr PlaceHUDTiles
 
@@ -147,7 +180,7 @@ EnemyBattleHUDGraphicsTiles:
 	db $78 ; lower-right triangle tile of the HUD
 
 PlaceHUDTiles:
-	ld [hl], $73
+	ld [hl], $73					; vertical segment of HUD
 	ld bc, SCREEN_WIDTH
 	add hl, bc
 	ld a, [wHUDGraphicsTiles + 1] ; leftmost tile
@@ -155,7 +188,7 @@ PlaceHUDTiles:
 	ld a, 8
 .loop
 	add hl, de
-	ld [hl], $76
+	ld [hl], $76					; horizontal segment of HUD
 	dec a
 	jr nz, .loop
 	add hl, de
@@ -165,22 +198,22 @@ PlaceHUDTiles:
 
 SetupPlayerAndEnemyPokeballs:
 	call LoadPartyPokeballGfx
-	ld hl, wPartyMons
-	ld de, wPartyCount
+	ld hl, wEnemyMons				; IDDJY swapped with wPartyMons
+	ld de, wEnemyPartyCount			; IDDJY swapped with wPartyCount
 	call SetupPokeballs
 	ld hl, wBaseCoordX
-	ld a, $50
+	ld a, $58						; IDDJY added 8 to move the balls one tile to the right
 	ld [hli], a
 	ld [hl], $40
 	ld a, 8
 	ld [wHUDPokeballGfxOffsetX], a
 	ld hl, wOAMBuffer
 	call WritePokeballOAMData
-	ld hl, wEnemyMons
-	ld de, wEnemyPartyCount
+	ld hl, wPartyMons				; IDDJY swapped with wEnemyMons
+	ld de, wPartyCount				; IDDJY swapped with wEnemyPartyCount
 	call SetupPokeballs
 	ld hl, wBaseCoordX
-	ld a, $50
+	ld a, $58						; IDDJY added 8 to move the balls one tile to the right
 	ld [hli], a
 	ld [hl], $68
 	ld hl, wOAMBuffer + $18
@@ -188,5 +221,5 @@ SetupPlayerAndEnemyPokeballs:
 
 ; four tiles: pokeball, black pokeball (status ailment), crossed out pokeball (fainted) and pokeball slot (no mon)
 PokeballTileGraphics::
-	INCBIN "gfx/battle/balls.2bpp"
+	INCBIN "gfx/pokeball.2bpp"
 PokeballTileGraphicsEnd:

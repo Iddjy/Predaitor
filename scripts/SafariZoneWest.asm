@@ -12,17 +12,17 @@ SafariZoneWest_TextPointers:
 	dw SafariZoneWestText8
 
 SafariZoneWestText5:
-	text_far _SafariZoneWestText5
-	text_end
+	TX_FAR _SafariZoneWestText5
+	db "@"
 
 SafariZoneWestText6:
-	text_far _SafariZoneWestText6
-	text_end
+	TX_FAR _SafariZoneWestText6
+	db "@"
 
 SafariZoneWestText7:
-	text_far _SafariZoneWestText7
-	text_end
+	TX_FAR _SafariZoneWestText7
+	db "@"
 
 SafariZoneWestText8:
-	text_far _SafariZoneWestText8
-	text_end
+	TX_FAR _SafariZoneWestText8
+	db "@"

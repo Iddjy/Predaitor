@@ -1,6 +1,6 @@
 PokemonTower7F_Script:
 	call EnableAutoTextBoxDrawing
-	ld hl, PokemonTower7TrainerHeaders
+	ld hl, PokemonTower7TrainerHeader0
 	ld de, PokemonTower7F_ScriptPointers
 	ld a, [wPokemonTower7FCurScript]
 	call ExecuteCurMapScriptInTable
@@ -31,7 +31,7 @@ PokemonTower7Script2:
 	ld a, $f0
 	ld [wJoyIgnore], a
 	ld a, [wSpriteIndex]
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	call PokemonTower7Script_60db6
 	ld a, $3
@@ -70,9 +70,9 @@ PokemonTower7Script4:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	ld a, SPRITE_FACING_UP
-	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wSpriteStateData1 + 9], a
 	ld a, MR_FUJIS_HOUSE
-	ldh [hWarpDestinationMap], a
+	ld [hWarpDestinationMap], a
 	ld a, $1
 	ld [wDestinationWarpID], a
 	ld a, LAVENDER_TOWN
@@ -107,7 +107,7 @@ PokemonTower7Script_60db6:
 	ld d, [hl]
 	ld e, a
 	ld a, [wSpriteIndex]
-	ldh [hSpriteIndex], a
+	ld [H_SPRITEINDEX], a
 	jp MoveSprite
 .asm_60dde
 	inc hl
@@ -117,18 +117,30 @@ PokemonTower7Script_60db6:
 	jr .asm_60dcb
 
 CoordsData_60de3:
-	map_coord_movement  9, 12, MovementData_60e13
-	map_coord_movement 10, 11, MovementData_60e1b
-	map_coord_movement 11, 11, MovementData_60e22
-	map_coord_movement 12, 11, MovementData_60e22
-	map_coord_movement 12, 10, MovementData_60e28
-	map_coord_movement 11,  9, MovementData_60e30
-	map_coord_movement 10,  9, MovementData_60e22
-	map_coord_movement  9,  9, MovementData_60e22
-	map_coord_movement  9,  8, MovementData_60e37
-	map_coord_movement 10,  7, MovementData_60e22
-	map_coord_movement 11,  7, MovementData_60e22
-	map_coord_movement 12,  7, MovementData_60e22
+	db $0C,$09
+	dw MovementData_60e13
+	db $0B,$0A
+	dw MovementData_60e1b
+	db $0B,$0B
+	dw MovementData_60e22
+	db $0B,$0C
+	dw MovementData_60e22
+	db $0A,$0C
+	dw MovementData_60e28
+	db $09,$0B
+	dw MovementData_60e30
+	db $09,$0A
+	dw MovementData_60e22
+	db $09,$09
+	dw MovementData_60e22
+	db $08,$09
+	dw MovementData_60e37
+	db $07,$0A
+	dw MovementData_60e22
+	db $07,$0B
+	dw MovementData_60e22
+	db $07,$0C
+	dw MovementData_60e22
 
 MovementData_60e13:
 	db NPC_MOVEMENT_RIGHT
@@ -138,7 +150,7 @@ MovementData_60e13:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_LEFT
-	db -1 ; end
+	db $FF
 
 MovementData_60e1b:
 	db NPC_MOVEMENT_DOWN
@@ -147,7 +159,7 @@ MovementData_60e1b:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
-	db -1 ; end
+	db $FF
 
 MovementData_60e22:
 	db NPC_MOVEMENT_DOWN
@@ -155,7 +167,7 @@ MovementData_60e22:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
-	db -1 ; end
+	db $FF
 
 MovementData_60e28:
 	db NPC_MOVEMENT_LEFT
@@ -165,7 +177,7 @@ MovementData_60e28:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
-	db -1 ; end
+	db $FF
 
 MovementData_60e30:
 	db NPC_MOVEMENT_DOWN
@@ -174,7 +186,7 @@ MovementData_60e30:
 	db NPC_MOVEMENT_LEFT
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
-	db -1 ; end
+	db $FF
 
 MovementData_60e37:
 	db NPC_MOVEMENT_RIGHT
@@ -184,7 +196,7 @@ MovementData_60e37:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
-	db -1 ; end
+	db $FF
 
 PokemonTower7F_TextPointers:
 	dw PokemonTower7Text1
@@ -192,36 +204,55 @@ PokemonTower7F_TextPointers:
 	dw PokemonTower7Text3
 	dw PokemonTower7FujiText
 
-PokemonTower7TrainerHeaders:
-	def_trainers
 PokemonTower7TrainerHeader0:
-	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_0, 3, PokemonTower7BattleText1, PokemonTower7EndBattleText1, PokemonTower7AfterBattleText1
+	dbEventFlagBit EVENT_BEAT_POKEMONTOWER_7_TRAINER_0
+	db ($3 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_POKEMONTOWER_7_TRAINER_0
+	dw PokemonTower7BattleText1 ; TextBeforeBattle
+	dw PokemonTower7AfterBattleText1 ; TextAfterBattle
+	dw PokemonTower7EndBattleText1 ; TextEndBattle
+	dw PokemonTower7EndBattleText1 ; TextEndBattle
+
 PokemonTower7TrainerHeader1:
-	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_1, 3, PokemonTower7BattleText2, PokemonTower7EndBattleText2, PokemonTower7AfterBattleText2
+	dbEventFlagBit EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
+	db ($3 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_POKEMONTOWER_7_TRAINER_1
+	dw PokemonTower7BattleText2 ; TextBeforeBattle
+	dw PokemonTower7AfterBattleText2 ; TextAfterBattle
+	dw PokemonTower7EndBattleText2 ; TextEndBattle
+	dw PokemonTower7EndBattleText2 ; TextEndBattle
+
 PokemonTower7TrainerHeader2:
-	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_2, 3, PokemonTower7BattleText3, PokemonTower7EndBattleText3, PokemonTower7AfterBattleText3
-	db -1 ; end
+	dbEventFlagBit EVENT_BEAT_POKEMONTOWER_7_TRAINER_2
+	db ($3 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_POKEMONTOWER_7_TRAINER_2
+	dw PokemonTower7BattleText3 ; TextBeforeBattle
+	dw PokemonTower7AfterBattleText3 ; TextAfterBattle
+	dw PokemonTower7EndBattleText3 ; TextEndBattle
+	dw PokemonTower7EndBattleText3 ; TextEndBattle
+
+	db $ff
 
 PokemonTower7Text1:
-	text_asm
+	TX_ASM
 	ld hl, PokemonTower7TrainerHeader0
 	call TalkToTrainer
 	jp TextScriptEnd
 
 PokemonTower7Text2:
-	text_asm
+	TX_ASM
 	ld hl, PokemonTower7TrainerHeader1
 	call TalkToTrainer
 	jp TextScriptEnd
 
 PokemonTower7Text3:
-	text_asm
+	TX_ASM
 	ld hl, PokemonTower7TrainerHeader2
 	call TalkToTrainer
 	jp TextScriptEnd
 
 PokemonTower7FujiText:
-	text_asm
+	TX_ASM
 	ld hl, TowerRescueFujiText
 	call PrintText
 	SetEvent EVENT_RESCUED_MR_FUJI
@@ -241,41 +272,41 @@ PokemonTower7FujiText:
 	jp TextScriptEnd
 
 TowerRescueFujiText:
-	text_far _TowerRescueFujiText
-	text_end
+	TX_FAR _TowerRescueFujiText
+	db "@"
 
 PokemonTower7BattleText1:
-	text_far _PokemonTower7BattleText1
-	text_end
+	TX_FAR _PokemonTower7BattleText1
+	db "@"
 
 PokemonTower7EndBattleText1:
-	text_far _PokemonTower7EndBattleText1
-	text_end
+	TX_FAR _PokemonTower7EndBattleText1
+	db "@"
 
 PokemonTower7AfterBattleText1:
-	text_far _PokemonTower7AfterBattleText1
-	text_end
+	TX_FAR _PokemonTower7AfterBattleText1
+	db "@"
 
 PokemonTower7BattleText2:
-	text_far _PokemonTower7BattleText2
-	text_end
+	TX_FAR _PokemonTower7BattleText2
+	db "@"
 
 PokemonTower7EndBattleText2:
-	text_far _PokemonTower7EndBattleText2
-	text_end
+	TX_FAR _PokemonTower7EndBattleText2
+	db "@"
 
 PokemonTower7AfterBattleText2:
-	text_far _PokemonTower7AfterBattleText2
-	text_end
+	TX_FAR _PokemonTower7AfterBattleText2
+	db "@"
 
 PokemonTower7BattleText3:
-	text_far _PokemonTower7BattleText3
-	text_end
+	TX_FAR _PokemonTower7BattleText3
+	db "@"
 
 PokemonTower7EndBattleText3:
-	text_far _PokemonTower7EndBattleText3
-	text_end
+	TX_FAR _PokemonTower7EndBattleText3
+	db "@"
 
 PokemonTower7AfterBattleText3:
-	text_far _PokemonTower7AfterBattleText3
-	text_end
+	TX_FAR _PokemonTower7AfterBattleText3
+	db "@"

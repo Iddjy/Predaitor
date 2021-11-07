@@ -8,9 +8,9 @@ Route2_TextPointers:
 	dw Route2Text4
 
 Route2Text3:
-	text_far _Route2Text3
-	text_end
+	TX_FAR _Route2Text3
+	db "@"
 
 Route2Text4:
-	text_far _Route2Text4
-	text_end
+	TX_FAR _Route2Text4
+	db "@"

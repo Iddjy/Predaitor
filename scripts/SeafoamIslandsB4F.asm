@@ -53,11 +53,11 @@ SeafoamIslands5Script0:
 	ret
 
 .Coords
-	dbmapcoord 20, 17
-	dbmapcoord 21, 17
-	dbmapcoord 20, 16
-	dbmapcoord 21, 16
-	db -1 ; end
+	db $11,$14
+	db $11,$15
+	db $10,$14
+	db $10,$15
+	db $FF
 
 SeafoamIslands5Script1:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -96,21 +96,21 @@ SeafoamIslands5Script2:
 	ret
 
 .Coords
-	dbmapcoord  4, 14
-	dbmapcoord  5, 14
-	db -1 ; end
+	db $0E,$04
+	db $0E,$05
+	db $FF
 
 RLEMovementData_46852:
-	db D_UP, 3
-	db D_RIGHT, 2
-	db D_UP, 1
-	db -1 ; end
+	db D_UP,$03
+	db D_RIGHT,$02
+	db D_UP,$01
+	db $FF
 
 RLEMovementData_46859:
-	db D_UP, 3
-	db D_RIGHT, 3
-	db D_UP, 1
-	db -1 ; end
+	db D_UP,$03
+	db D_RIGHT,$03
+	db D_UP,$01
+	db $FF
 
 SeafoamIslands5Script3:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -137,16 +137,19 @@ SeafoamIslandsB4F_TextPointers:
 	dw SeafoamIslands5Text4
 	dw SeafoamIslands5Text5
 
-; Articuno is object 3, but its event flag is bit 2.
-; This is not a problem because its sight range is 0, and
-; trainer headers were not stored by ExecuteCurMapScriptInTable.
-	def_trainers 2
 ArticunoTrainerHeader:
-	trainer EVENT_BEAT_ARTICUNO, 0, ArticunoBattleText, ArticunoBattleText, ArticunoBattleText
-	db -1 ; end
+	dbEventFlagBit EVENT_BEAT_ARTICUNO
+	db ($0 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_ARTICUNO
+	dw ArticunoBattleText ; TextBeforeBattle
+	dw ArticunoBattleText ; TextAfterBattle
+	dw ArticunoBattleText ; TextEndBattle
+	dw ArticunoBattleText ; TextEndBattle
+
+	db $ff
 
 ArticunoText:
-	text_asm
+	TX_ASM
 	ld hl, ArticunoTrainerHeader
 	call TalkToTrainer
 	ld a, $4
@@ -154,17 +157,17 @@ ArticunoText:
 	jp TextScriptEnd
 
 ArticunoBattleText:
-	text_far _ArticunoBattleText
-	text_asm
+	TX_FAR _ArticunoBattleText
+	TX_ASM
 	ld a, ARTICUNO
 	call PlayCry
 	call WaitForSoundToFinish
 	jp TextScriptEnd
 
 SeafoamIslands5Text4:
-	text_far _SeafoamIslands5Text4
-	text_end
+	TX_FAR _SeafoamIslands5Text4
+	db "@"
 
 SeafoamIslands5Text5:
-	text_far _SeafoamIslands5Text5
-	text_end
+	TX_FAR _SeafoamIslands5Text5
+	db "@"

@@ -3,16 +3,16 @@ UndergroundPathRoute5_Script:
 	ld [wLastMap], a
 	ret
 
-UndergroundPathEntranceRoute5_TextScriptEndingText:
-	text_end
+UndergroundPathEntranceRoute5_5d6af:
+	db "@"
 
 UndergroundPathRoute5_TextPointers:
 	dw UndergroundPathEntranceRoute5Text1
 
 UndergroundPathEntranceRoute5Text1:
-	text_asm
-	ld a, TRADE_FOR_SPOT
+	TX_ASM
+	ld a, $9
 	ld [wWhichTrade], a
 	predef DoInGameTradeDialogue
-	ld hl, UndergroundPathEntranceRoute5_TextScriptEndingText
+	ld hl, UndergroundPathEntranceRoute5_5d6af
 	ret

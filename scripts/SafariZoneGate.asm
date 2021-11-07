@@ -18,14 +18,14 @@ SafariZoneGate_ScriptPointers:
 	call ArePlayerCoordsInArray
 	ret nc
 	ld a, $3
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	ld a, $ff
 	ld [wJoyIgnore], a
 	xor a
-	ldh [hJoyHeld], a
+	ld [hJoyHeld], a
 	ld a, SPRITE_FACING_RIGHT
-	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wSpriteStateData1 + 9], a
 	ld a, [wCoordIndex]
 	cp $1
 	jr z, .asm_7520f
@@ -43,20 +43,20 @@ SafariZoneGate_ScriptPointers:
 	ret
 
 .CoordsData_75221:
-	dbmapcoord  3,  2
-	dbmapcoord  4,  2
-	db -1 ; end
+	db $02,$03
+	db $02,$04
+	db $FF
 
 .SafariZoneEntranceScript1
 	call SafariZoneEntranceScript_752b4
 	ret nz
 .SafariZoneEntranceScript2
 	xor a
-	ldh [hJoyHeld], a
+	ld [hJoyHeld], a
 	ld [wJoyIgnore], a
 	call UpdateSprites
 	ld a, $4
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	ld a, $ff
 	ld [wJoyIgnore], a
@@ -81,7 +81,7 @@ SafariZoneGate_ScriptPointers:
 	ld a, $f0
 	ld [wJoyIgnore], a
 	ld a, $6
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	xor a
 	ld [wNumSafariBalls], a
@@ -93,7 +93,7 @@ SafariZoneGate_ScriptPointers:
 	jr .asm_75286
 .asm_7527f
 	ld a, $5
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .asm_75286
 	ret
@@ -139,12 +139,12 @@ SafariZoneGate_TextPointers:
 	dw .SafariZoneEntranceText6
 
 .SafariZoneEntranceText1
-	text_far _SafariZoneEntranceText1
-	text_end
+	TX_FAR _SafariZoneEntranceText1
+	db "@"
 
 .SafariZoneEntranceText4
-	text_far SafariZoneEntranceText_9e6e4
-	text_asm
+	TX_FAR SafariZoneEntranceText_9e6e4
+	TX_ASM
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
@@ -153,11 +153,11 @@ SafariZoneGate_TextPointers:
 	and a
 	jp nz, .PleaseComeAgain
 	xor a
-	ldh [hMoney], a
+	ld [hMoney], a
 	ld a, $05
-	ldh [hMoney + 1], a
+	ld [hMoney + 1], a
 	ld a, $00
-	ldh [hMoney + 2], a
+	ld [hMoney + 2], a
 	call HasEnoughMoney
 	jr nc, .success
 	ld hl, .NotEnoughMoneyText
@@ -182,9 +182,9 @@ SafariZoneGate_TextPointers:
 	call PrintText
 	ld a, 30
 	ld [wNumSafariBalls], a
-	ld a, HIGH(502)
+	ld a, 502 / $100
 	ld [wSafariSteps], a
-	ld a, LOW(502)
+	ld a, 502 % $100
 	ld [wSafariSteps + 1], a
 	ld a, D_UP
 	ld c, 3
@@ -208,22 +208,22 @@ SafariZoneGate_TextPointers:
 	jp TextScriptEnd
 
 .MakePaymentText
-	text_far SafariZoneEntranceText_9e747
-	sound_get_item_1
-	text_far _SafariZoneEntranceText_75360
-	text_end
+	TX_FAR SafariZoneEntranceText_9e747
+	TX_SFX_ITEM_1
+	TX_FAR _SafariZoneEntranceText_75360
+	db "@"
 
 .PleaseComeAgainText
-	text_far _SafariZoneEntranceText_75365
-	text_end
+	TX_FAR _SafariZoneEntranceText_75365
+	db "@"
 
 .NotEnoughMoneyText
-	text_far _SafariZoneEntranceText_7536a
-	text_end
+	TX_FAR _SafariZoneEntranceText_7536a
+	db "@"
 
 .SafariZoneEntranceText5
-	text_far SafariZoneEntranceText_9e814
-	text_asm
+	TX_FAR SafariZoneEntranceText_9e814
+	TX_ASM
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
@@ -231,7 +231,7 @@ SafariZoneGate_TextPointers:
 	ld hl, .SafariZoneEntranceText_753bb
 	call PrintText
 	xor a
-	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wSpriteStateData1 + 9], a
 	ld a, D_DOWN
 	ld c, $3
 	call SafariZoneEntranceAutoWalk
@@ -243,7 +243,7 @@ SafariZoneGate_TextPointers:
 	ld hl, .SafariZoneEntranceText_753c0
 	call PrintText
 	ld a, SPRITE_FACING_UP
-	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wSpriteStateData1 + 9], a
 	ld a, D_UP
 	ld c, $1
 	call SafariZoneEntranceAutoWalk
@@ -255,19 +255,19 @@ SafariZoneGate_TextPointers:
 	jp TextScriptEnd
 
 .SafariZoneEntranceText_753bb
-	text_far _SafariZoneEntranceText_753bb
-	text_end
+	TX_FAR _SafariZoneEntranceText_753bb
+	db "@"
 
 .SafariZoneEntranceText_753c0
-	text_far _SafariZoneEntranceText_753c0
-	text_end
+	TX_FAR _SafariZoneEntranceText_753c0
+	db "@"
 
 .SafariZoneEntranceText6
-	text_far _SafariZoneEntranceText_753c5
-	text_end
+	TX_FAR _SafariZoneEntranceText_753c5
+	db "@"
 
 .SafariZoneEntranceText2
-	text_asm
+	TX_ASM
 	ld hl, .FirstTimeQuestionText
 	call PrintText
 	call YesNoChoice
@@ -281,13 +281,13 @@ SafariZoneGate_TextPointers:
 	jp TextScriptEnd
 
 .FirstTimeQuestionText
-	text_far _SafariZoneEntranceText_753e6
-	text_end
+	TX_FAR _SafariZoneEntranceText_753e6
+	db "@"
 
 .ExplanationText
-	text_far _SafariZoneEntranceText_753eb
-	text_end
+	TX_FAR _SafariZoneEntranceText_753eb
+	db "@"
 
 .RegularText
-	text_far _SafariZoneEntranceText_753f0
-	text_end
+	TX_FAR _SafariZoneEntranceText_753f0
+	db "@"

@@ -1,7 +1,7 @@
 SilphCo10F_Script:
 	call SilphCo10Script_5a14f
 	call EnableAutoTextBoxDrawing
-	ld hl, SilphCo10TrainerHeaders
+	ld hl, SilphCo10TrainerHeader0
 	ld de, SilphCo10F_ScriptPointers
 	ld a, [wSilphCo10FCurScript]
 	call ExecuteCurMapScriptInTable
@@ -24,11 +24,11 @@ SilphCo10Script_5a14f:
 	predef_jump ReplaceTileBlock
 
 SilphCo10GateCoords:
-	dbmapcoord  5,  4
-	db -1 ; end
+	db $04,$05
+	db $FF
 
 SilphCo10Text_5a176:
-	ldh a, [hUnlockedSilphCoDoors]
+	ld a, [$ffe0]
 	and a
 	ret z
 	SetEvent EVENT_SILPH_CO_10_UNLOCKED_DOOR
@@ -47,28 +47,40 @@ SilphCo10F_TextPointers:
 	dw PickUpItemText
 	dw PickUpItemText
 
-SilphCo10TrainerHeaders:
-	def_trainers
 SilphCo10TrainerHeader0:
-	trainer EVENT_BEAT_SILPH_CO_10F_TRAINER_0, 3, SilphCo10BattleText1, SilphCo10EndBattleText1, SilphCo10AfterBattleText1
+	dbEventFlagBit EVENT_BEAT_SILPH_CO_10F_TRAINER_0
+	db ($3 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_SILPH_CO_10F_TRAINER_0
+	dw SilphCo10BattleText1 ; TextBeforeBattle
+	dw SilphCo10AfterBattleText1 ; TextAfterBattle
+	dw SilphCo10EndBattleText1 ; TextEndBattle
+	dw SilphCo10EndBattleText1 ; TextEndBattle
+
 SilphCo10TrainerHeader1:
-	trainer EVENT_BEAT_SILPH_CO_10F_TRAINER_1, 4, SilphCo10BattleText2, SilphCo10EndBattleText2, SilphCo10AfterBattleText2
-	db -1 ; end
+	dbEventFlagBit EVENT_BEAT_SILPH_CO_10F_TRAINER_1
+	db ($4 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_SILPH_CO_10F_TRAINER_1
+	dw SilphCo10BattleText2 ; TextBeforeBattle
+	dw SilphCo10AfterBattleText2 ; TextAfterBattle
+	dw SilphCo10EndBattleText2 ; TextEndBattle
+	dw SilphCo10EndBattleText2 ; TextEndBattle
+
+	db $ff
 
 SilphCo10Text1:
-	text_asm
+	TX_ASM
 	ld hl, SilphCo10TrainerHeader0
 	call TalkToTrainer
 	jp TextScriptEnd
 
 SilphCo10Text2:
-	text_asm
+	TX_ASM
 	ld hl, SilphCo10TrainerHeader1
 	call TalkToTrainer
 	jp TextScriptEnd
 
 SilphCo10Text3:
-	text_asm
+	TX_ASM
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	ld hl, SilphCo10Text_5a1d8
 	jr nz, .asm_cf85f
@@ -78,33 +90,33 @@ SilphCo10Text3:
 	jp TextScriptEnd
 
 SilphCo10Text_5a1d3:
-	text_far _SilphCo10Text_5a1d3
-	text_end
+	TX_FAR _SilphCo10Text_5a1d3
+	db "@"
 
 SilphCo10Text_5a1d8:
-	text_far _SilphCo10Text_5a1d8
-	text_end
+	TX_FAR _SilphCo10Text_5a1d8
+	db "@"
 
 SilphCo10BattleText1:
-	text_far _SilphCo10BattleText1
-	text_end
+	TX_FAR _SilphCo10BattleText1
+	db "@"
 
 SilphCo10EndBattleText1:
-	text_far _SilphCo10EndBattleText1
-	text_end
+	TX_FAR _SilphCo10EndBattleText1
+	db "@"
 
 SilphCo10AfterBattleText1:
-	text_far _SilphCo10AfterBattleText1
-	text_end
+	TX_FAR _SilphCo10AfterBattleText1
+	db "@"
 
 SilphCo10BattleText2:
-	text_far _SilphCo10BattleText2
-	text_end
+	TX_FAR _SilphCo10BattleText2
+	db "@"
 
 SilphCo10EndBattleText2:
-	text_far _SilphCo10EndBattleText2
-	text_end
+	TX_FAR _SilphCo10EndBattleText2
+	db "@"
 
 SilphCo10AfterBattleText2:
-	text_far _SilphCo10AfterBattleText2
-	text_end
+	TX_FAR _SilphCo10AfterBattleText2
+	db "@"

@@ -1,7 +1,7 @@
 PokemonMansion1F_Script:
 	call Mansion1Subscript1
 	call EnableAutoTextBoxDrawing
-	ld hl, Mansion1TrainerHeaders
+	ld hl, Mansion1TrainerHeader0
 	ld de, PokemonMansion1F_ScriptPointers
 	ld a, [wPokemonMansion1FCurScript]
 	call ExecuteCurMapScriptInTable
@@ -45,14 +45,14 @@ Mansion1ReplaceBlock:
 	predef ReplaceTileBlock
 	ret
 
-Mansion1Script_Switches::
-	ld a, [wSpritePlayerStateData1FacingDirection]
+Mansion1Script_Switches:
+	ld a, [wSpriteStateData1 + 9]
 	cp SPRITE_FACING_UP
 	ret nz
 	xor a
-	ldh [hJoyHeld], a
+	ld [hJoyHeld], a
 	ld a, $4
-	ldh [hSpriteIndexOrTextID], a
+	ld [hSpriteIndexOrTextID], a
 	jp DisplayTextID
 
 PokemonMansion1F_ScriptPointers:
@@ -66,32 +66,37 @@ PokemonMansion1F_TextPointers:
 	dw PickUpItemText
 	dw Mansion1Text4
 
-Mansion1TrainerHeaders:
-	def_trainers
 Mansion1TrainerHeader0:
-	trainer EVENT_BEAT_MANSION_1_TRAINER_0, 3, Mansion1BattleText2, Mansion1EndBattleText2, Mansion1AfterBattleText2
-	db -1 ; end
+	dbEventFlagBit EVENT_BEAT_MANSION_1_TRAINER_0
+	db ($3 << 4) ; trainer's view range
+	dwEventFlagAddress EVENT_BEAT_MANSION_1_TRAINER_0
+	dw Mansion1BattleText2 ; TextBeforeBattle
+	dw Mansion1AfterBattleText2 ; TextAfterBattle
+	dw Mansion1EndBattleText2 ; TextEndBattle
+	dw Mansion1EndBattleText2 ; TextEndBattle
+
+	db $ff
 
 Mansion1Text1:
-	text_asm
+	TX_ASM
 	ld hl, Mansion1TrainerHeader0
 	call TalkToTrainer
 	jp TextScriptEnd
 
 Mansion1BattleText2:
-	text_far _Mansion1BattleText2
-	text_end
+	TX_FAR _Mansion1BattleText2
+	db "@"
 
 Mansion1EndBattleText2:
-	text_far _Mansion1EndBattleText2
-	text_end
+	TX_FAR _Mansion1EndBattleText2
+	db "@"
 
 Mansion1AfterBattleText2:
-	text_far _Mansion1AfterBattleText2
-	text_end
+	TX_FAR _Mansion1AfterBattleText2
+	db "@"
 
 Mansion1Text4:
-	text_asm
+	TX_ASM
 	ld hl, MansionSwitchText
 	call PrintText
 	call YesNoChoice
@@ -117,13 +122,13 @@ Mansion1Text4:
 	jp TextScriptEnd
 
 MansionSwitchText:
-	text_far _MansionSwitchText
-	text_end
+	TX_FAR _MansionSwitchText
+	db "@"
 
 MansionSwitchPressedText:
-	text_far _MansionSwitchPressedText
-	text_end
+	TX_FAR _MansionSwitchPressedText
+	db "@"
 
 MansionSwitchNotPressedText:
-	text_far _MansionSwitchNotPressedText
-	text_end
+	TX_FAR _MansionSwitchNotPressedText
+	db "@"

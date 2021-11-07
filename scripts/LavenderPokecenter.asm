@@ -9,15 +9,15 @@ LavenderPokecenter_TextPointers:
 	dw LavenderTradeNurseText
 
 LavenderTradeNurseText:
-	script_cable_club_receptionist
+	TX_CABLE_CLUB_RECEPTIONIST
 
 LavenderHealNurseText:
-	script_pokecenter_nurse
+	TX_POKECENTER_NURSE
 
 LavenderPokecenterText2:
-	text_far _LavenderPokecenterText2
-	text_end
+	TX_FAR _LavenderPokecenterText2
+	db "@"
 
 LavenderPokecenterText3:
-	text_far _LavenderPokecenterText3
-	text_end
+	TX_FAR _LavenderPokecenterText3
+	db "@"

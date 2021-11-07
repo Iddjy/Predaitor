@@ -2,18 +2,18 @@ PrintSafariZoneBattleText:
 	ld hl, wSafariBaitFactor
 	ld a, [hl]
 	and a
-	jr z, .no_bait
+	jr z, .asm_4284
 	dec [hl]
 	ld hl, SafariZoneEatingText
-	jr .done
-.no_bait
+	jr .asm_429f
+.asm_4284
 	dec hl
 	ld a, [hl]
 	and a
 	ret z
 	dec [hl]
 	ld hl, SafariZoneAngryText
-	jr nz, .done
+	jr nz, .asm_429f
 	push hl
 	ld a, [wEnemyMonSpecies]
 	ld [wd0b5], a
@@ -21,16 +21,16 @@ PrintSafariZoneBattleText:
 	ld a, [wMonHCatchRate]
 	ld [wEnemyMonActualCatchRate], a
 	pop hl
-.done
+.asm_429f
 	push hl
 	call LoadScreenTilesFromBuffer1
 	pop hl
 	jp PrintText
 
 SafariZoneEatingText:
-	text_far _SafariZoneEatingText
-	text_end
+	TX_FAR _SafariZoneEatingText
+	db "@"
 
 SafariZoneAngryText:
-	text_far _SafariZoneAngryText
-	text_end
+	TX_FAR _SafariZoneAngryText
+	db "@"

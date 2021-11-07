@@ -7,46 +7,46 @@ Route1_TextPointers:
 	dw Route1Text3
 
 Route1Text1:
-	text_asm
+	TX_ASM
 	CheckAndSetEvent EVENT_GOT_POTION_SAMPLE
-	jr nz, .got_item
+	jr nz, .asm_1cada
 	ld hl, Route1ViridianMartSampleText
 	call PrintText
 	lb bc, POTION, 1
 	call GiveItem
-	jr nc, .bag_full
+	jr nc, .BagFull
 	ld hl, Route1Text_1cae8
-	jr .done
-.bag_full
+	jr .asm_1cadd
+.BagFull
 	ld hl, Route1Text_1caf3
-	jr .done
-.got_item
+	jr .asm_1cadd
+.asm_1cada
 	ld hl, Route1Text_1caee
-.done
+.asm_1cadd
 	call PrintText
 	jp TextScriptEnd
 
 Route1ViridianMartSampleText:
-	text_far _Route1ViridianMartSampleText
-	text_end
+	TX_FAR _Route1ViridianMartSampleText
+	db "@"
 
 Route1Text_1cae8:
-	text_far _Route1Text_1cae8
-	sound_get_item_1
-	text_end
+	TX_FAR _Route1Text_1cae8
+	TX_SFX_ITEM_1
+	db "@"
 
 Route1Text_1caee:
-	text_far _Route1Text_1caee
-	text_end
+	TX_FAR _Route1Text_1caee
+	db "@"
 
 Route1Text_1caf3:
-	text_far _Route1Text_1caf3
-	text_end
+	TX_FAR _Route1Text_1caf3
+	db "@"
 
 Route1Text2:
-	text_far _Route1Text2
-	text_end
+	TX_FAR _Route1Text2
+	db "@"
 
 Route1Text3:
-	text_far _Route1Text3
-	text_end
+	TX_FAR _Route1Text3
+	db "@"

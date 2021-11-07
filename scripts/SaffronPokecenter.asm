@@ -9,15 +9,15 @@ SaffronPokecenter_TextPointers:
 	dw SaffronTradeNurseText
 
 SaffronHealNurseText:
-	script_pokecenter_nurse
+	TX_POKECENTER_NURSE
 
 SaffronPokecenterText2:
-	text_far _SaffronPokecenterText2
-	text_end
+	TX_FAR _SaffronPokecenterText2
+	db "@"
 
 SaffronPokecenterText3:
-	text_far _SaffronPokecenterText3
-	text_end
+	TX_FAR _SaffronPokecenterText3
+	db "@"
 
 SaffronTradeNurseText:
-	script_cable_club_receptionist
+	TX_CABLE_CLUB_RECEPTIONIST

@@ -6,9 +6,9 @@ SafariZoneCenterRestHouse_TextPointers:
 	dw SafariZoneRestHouse1Text2
 
 SafariZoneRestHouse1Text1:
-	text_far _SafariZoneRestHouse1Text1
-	text_end
+	TX_FAR _SafariZoneRestHouse1Text1
+	db "@"
 
 SafariZoneRestHouse1Text2:
-	text_far _SafariZoneRestHouse1Text2
-	text_end
+	TX_FAR _SafariZoneRestHouse1Text2
+	db "@"

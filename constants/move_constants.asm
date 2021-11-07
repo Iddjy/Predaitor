@@ -1,11 +1,5 @@
-; move ids
-; indexes for:
-; - Moves (see data/moves/moves.asm)
-; - MoveNames (see data/moves/names.asm)
-; - AttackAnimationPointers (see data/moves/animations.asm)
-; - MoveSoundTable (see data/moves/sfx.asm)
-	const_def
-	const NO_MOVE      ; 00
+const_value = 1
+
 	const POUND        ; 01
 	const KARATE_CHOP  ; 02
 	const DOUBLESLAP   ; 03
@@ -170,8 +164,10 @@
 	const SUPER_FANG   ; a2
 	const SLASH        ; a3
 	const SUBSTITUTE   ; a4
-	const STRUGGLE     ; a5
-NUM_ATTACKS EQU const_value - 1
+
+NUM_ATTACKS EQU const_value + -1
+
+	const STRUGGLE
 
 	; Moves do double duty as animation identifiers.
 
@@ -213,4 +209,10 @@ NUM_ATTACKS EQU const_value - 1
 	const ROCK_ANIM ; throw rock
 	const BAIT_ANIM ; throw bait
 
-NUM_ATTACK_ANIMS EQU const_value - 1
+; IDDJY these represent the indexes of each property in the move data structure
+MOVEDATA_ID			EQU 0
+MOVEDATA_EFFECT		EQU 1
+MOVEDATA_POWER		EQU 2
+MOVEDATA_TYPE		EQU 3
+MOVEDATA_ACCURACY	EQU 4
+MOVEDATA_PP			EQU 5

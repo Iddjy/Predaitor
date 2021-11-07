@@ -11,102 +11,102 @@ MrFujisHouse_TextPointers:
 	dw LavenderHouse1Text6
 
 LavenderHouse1Text1:
-	text_asm
+	TX_ASM
 	CheckEvent EVENT_RESCUED_MR_FUJI
-	jr nz, .rescued_mr_fuji
+	jr nz, .asm_72e5d
 	ld hl, LavenderHouse1Text_1d8d1
 	call PrintText
-	jr .done
-.rescued_mr_fuji
+	jr .asm_6957f
+.asm_72e5d
 	ld hl, LavenderHouse1Text_1d8d6
 	call PrintText
-.done
+.asm_6957f
 	jp TextScriptEnd
 
 LavenderHouse1Text_1d8d1:
-	text_far _LavenderHouse1Text_1d8d1
-	text_end
+	TX_FAR _LavenderHouse1Text_1d8d1
+	db "@"
 
 LavenderHouse1Text_1d8d6:
-	text_far _LavenderHouse1Text_1d8d6
-	text_end
+	TX_FAR _LavenderHouse1Text_1d8d6
+	db "@"
 
 LavenderHouse1Text2:
-	text_asm
+	TX_ASM
 	CheckEvent EVENT_RESCUED_MR_FUJI
-	jr nz, .rescued_mr_fuji
+	jr nz, .asm_06470
 	ld hl, LavenderHouse1Text_1d8f4
 	call PrintText
-	jr .done
-.rescued_mr_fuji
+	jr .asm_3d208
+.asm_06470
 	ld hl, LavenderHouse1Text_1d8f9
 	call PrintText
-.done
+.asm_3d208
 	jp TextScriptEnd
 
 LavenderHouse1Text_1d8f4:
-	text_far _LavenderHouse1Text_1d8f4
-	text_end
+	TX_FAR _LavenderHouse1Text_1d8f4
+	db "@"
 
 LavenderHouse1Text_1d8f9:
-	text_far _LavenderHouse1Text_1d8f9
-	text_end
+	TX_FAR _LavenderHouse1Text_1d8f9
+	db "@"
 
 LavenderHouse1Text3:
-	text_far _LavenderHouse1Text3
-	text_asm
+	TX_FAR _LavenderHouse1Text3
+	TX_ASM
 	ld a, PSYDUCK
 	call PlayCry
 	jp TextScriptEnd
 
 LavenderHouse1Text4:
-	text_far _LavenderHouse1Text4
-	text_asm
+	TX_FAR _LavenderHouse1Text4
+	TX_ASM
 	ld a, NIDORINO
 	call PlayCry
 	jp TextScriptEnd
 
 LavenderHouse1Text5:
-	text_asm
+	TX_ASM
 	CheckEvent EVENT_GOT_POKE_FLUTE
-	jr nz, .got_item
+	jr nz, .asm_15ac2
 	ld hl, LavenderHouse1Text_1d94c
 	call PrintText
 	lb bc, POKE_FLUTE, 1
 	call GiveItem
-	jr nc, .bag_full
+	jr nc, .BagFull
 	ld hl, ReceivedFluteText
 	call PrintText
 	SetEvent EVENT_GOT_POKE_FLUTE
-	jr .done
-.bag_full
+	jr .asm_da749
+.BagFull
 	ld hl, FluteNoRoomText
 	call PrintText
-	jr .done
-.got_item
+	jr .asm_da749
+.asm_15ac2
 	ld hl, MrFujiAfterFluteText
 	call PrintText
-.done
+.asm_da749
 	jp TextScriptEnd
 
 LavenderHouse1Text_1d94c:
-	text_far _LavenderHouse1Text_1d94c
-	text_end
+	TX_FAR _LavenderHouse1Text_1d94c
+	db "@"
 
 ReceivedFluteText:
-	text_far _ReceivedFluteText
-	sound_get_key_item
-	text_far _FluteExplanationText
-	text_end
+	TX_FAR _ReceivedFluteText
+	TX_SFX_KEY_ITEM
+	TX_FAR _FluteExplanationText
+	db "@"
 
 FluteNoRoomText:
-	text_far _FluteNoRoomText
-	text_end
+	TX_FAR _FluteNoRoomText
+	db "@"
 
 MrFujiAfterFluteText:
-	text_far _MrFujiAfterFluteText
-	text_end
+	TX_FAR _MrFujiAfterFluteText
+	db "@"
 
 LavenderHouse1Text6:
-	text_far _LavenderHouse1Text6
-	text_end
+	TX_FAR _LavenderHouse1Text6
+	db "@"

@@ -7,26 +7,26 @@ Route18Gate2F_TextPointers:
 	dw Route18GateUpstairsText3
 
 Route18GateUpstairsText1:
-	text_asm
-	ld a, TRADE_FOR_MARC
+	TX_ASM
+	ld a, $5
 	ld [wWhichTrade], a
 	predef DoInGameTradeDialogue
 	jp TextScriptEnd
 
 Route18GateUpstairsText2:
-	text_asm
+	TX_ASM
 	ld hl, Route18GateUpstairsText_49993
 	jp GateUpstairsScript_PrintIfFacingUp
 
 Route18GateUpstairsText_49993:
-	text_far _Route18GateUpstairsText_49993
-	text_end
+	TX_FAR _Route18GateUpstairsText_49993
+	db "@"
 
 Route18GateUpstairsText3:
-	text_asm
+	TX_ASM
 	ld hl, Route18GateUpstairsText_4999f
 	jp GateUpstairsScript_PrintIfFacingUp
 
 Route18GateUpstairsText_4999f:
-	text_far _Route18GateUpstairsText_4999f
-	text_end
+	TX_FAR _Route18GateUpstairsText_4999f
+	db "@"

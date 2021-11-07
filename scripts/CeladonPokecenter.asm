@@ -9,15 +9,15 @@ CeladonPokecenter_TextPointers:
 	dw CeladonTradeNurseText
 
 CeladonTradeNurseText:
-	script_cable_club_receptionist
+	TX_CABLE_CLUB_RECEPTIONIST
 
 CeladonHealNurseText:
-	script_pokecenter_nurse
+	TX_POKECENTER_NURSE
 
 CeladonPokecenterText2:
-	text_far _CeladonPokecenterText2
-	text_end
+	TX_FAR _CeladonPokecenterText2
+	db "@"
 
 CeladonPokecenterText3:
-	text_far _CeladonPokecenterText3
-	text_end
+	TX_FAR _CeladonPokecenterText3
+	db "@"

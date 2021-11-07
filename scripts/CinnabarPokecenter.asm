@@ -9,15 +9,15 @@ CinnabarPokecenter_TextPointers:
 	dw CinnabarTradeNurseText
 
 CinnabarHealNurseText:
-	script_pokecenter_nurse
+	TX_POKECENTER_NURSE
 
 CinnabarPokecenterText2:
-	text_far _CinnabarPokecenterText2
-	text_end
+	TX_FAR _CinnabarPokecenterText2
+	db "@"
 
 CinnabarPokecenterText3:
-	text_far _CinnabarPokecenterText3
-	text_end
+	TX_FAR _CinnabarPokecenterText3
+	db "@"
 
 CinnabarTradeNurseText:
-	script_cable_club_receptionist
+	TX_CABLE_CLUB_RECEPTIONIST

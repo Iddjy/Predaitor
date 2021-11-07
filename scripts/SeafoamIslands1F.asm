@@ -38,9 +38,9 @@ SeafoamIslands1F_Script:
 	jp IsPlayerOnDungeonWarp
 
 Seafoam1HolesCoords:
-	dbmapcoord 17,  6
-	dbmapcoord 24,  6
-	db -1 ; end
+	db $06,$11
+	db $06,$18
+	db $ff
 
 SeafoamIslands1F_TextPointers:
 	dw BoulderText

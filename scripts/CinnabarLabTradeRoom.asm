@@ -7,18 +7,18 @@ CinnabarLabTradeRoom_TextPointers:
 	dw Lab2Text3
 
 Lab2Text1:
-	text_far _Lab2Text1
-	text_end
+	TX_FAR _Lab2Text1
+	db "@"
 
 Lab2Text2:
-	text_asm
-	ld a, TRADE_FOR_DORIS
+	TX_ASM
+	ld a, $7
 	ld [wWhichTrade], a
 	jr Lab2DoTrade
 
 Lab2Text3:
-	text_asm
-	ld a, TRADE_FOR_CRINKLES
+	TX_ASM
+	ld a, $8
 	ld [wWhichTrade], a
 Lab2DoTrade:
 	predef DoInGameTradeDialogue
