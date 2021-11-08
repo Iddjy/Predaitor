@@ -83,4 +83,4 @@ The actual values for the tiers are in constants/trainer_constants.asm.
 
 |Setup menu|Trainer Class info screen|Trainer Team info screen|Start of battle screen|Battle screen|
 |---|---|---|---|---|
-|<img src="doc/images/SetupMenu.png" width="200" height="200" />|<img src="doc/images/TrainerClass.png" width="200" height="200" />|<img src="doc/images/TrainerTeam.png" width="200" height="200" />|<img src="doc/images/StartScreen.png" width="200" height="200" />|<img src="doc/images/Battle.png" width="200" height="200" />|
+|<img src="doc/images/SetupMenu.png" width="150" height="150" />|<img src="doc/images/TrainerClass.png" width="150" height="150" />|<img src="doc/images/TrainerTeam.png" width="150" height="150" />|<img src="doc/images/StartScreen.png" width="150" height="150" />|<img src="doc/images/Battle.png" width="150" height="150" />|
