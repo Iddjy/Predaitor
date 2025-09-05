@@ -27,22 +27,35 @@ TrainerNames:
 	db "PROF.OAK@"
 	db "CHIEF@"
 	db "SCIENTIST@"
-	db "GIOVANNI@"
+;	db "GIOVANNI@"
+	db "MITCH@"			; from PTCG
 	db "ROCKET@"
 	db "COOLTRAINER♂@"
 	db "COOLTRAINER♀@"
-	db "BRUNO@"
-	db "BROCK@"
-	db "MISTY@"
-	db "LT.SURGE@"
-	db "ERIKA@"
-	db "KOGA@"
-	db "BLAINE@"
-	db "SABRINA@"
+;	db "BRUNO@"
+	db "STEVE@"			; from PTCG
+;	db "BROCK@"
+	db "GENE@"			; from PTCG
+;	db "MISTY@"
+	db "AMY@"			; from PTCG
+;	db "LT.SURGE@"
+	db "ISAAC@"			; from PTCG
+;	db "ERIKA@"
+	db "NIKKI@"			; from PTCG
+;	db "KOGA@"
+	db "RICK@"			; from PTCG
+;	db "BLAINE@"
+	db "KEN@"			; from PTCG
+;	db "SABRINA@"
+	db "MURRAY@"		; from PTCG
 	db "GENTLEMAN@"
 	db "RIVAL2@"
-	db "RIVAL3@"
-	db "LORELEI@"
+;	db "RIVAL3@"
+	db "RONALD@"		; from PTCG
+;	db "LORELEI@"
+	db "COURTNEY@"		; from PTCG
 	db "CHANNELER@"
-	db "AGATHA@"
-	db "LANCE@"
+;	db "AGATHA@"
+	db "JACK@"			; from PTCG
+;	db "LANCE@"
+	db "ROD@"			; from PTCG

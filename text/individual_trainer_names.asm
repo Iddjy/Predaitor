@@ -396,7 +396,8 @@ ScientistNames:
 GiovanniNames:
 	db "GIOVANNI@"
 	db "GIOVANNI@"
-	db "GIOVANNI@"
+;	db "GIOVANNI@"
+	db "MITCH@"
 	db "@"
 	
 ; Rocket Class
@@ -472,42 +473,50 @@ CooltrainerFNames:
 	
 ; Bruno Class
 BrunoNames:
-	db "BRUNO@"
+;	db "BRUNO@"
+	db "STEVE@"
 	db "@"
 	
 ; Brock Class
 BrockNames:
-	db "BROCK@"
+;	db "BROCK@"
+	db "GENE@"
 	db "@"
 	
 ; Misty Class
 MistyNames:
-	db "MISTY@"
+;	db "MISTY@"
+	db "AMY@"
 	db "@"
 	
 ; Lt. Surge Class
 LtSurgeNames:
-	db "LT.SURGE@"
+;	db "LT.SURGE@"
+	db "ISAAC@"
 	db "@"
 	
 ; Erika Class
 ErikaNames:
-	db "ERIKA@"
+;	db "ERIKA@"
+	db "NIKKI@"
 	db "@"
 	
 ; Koga Class
 KogaNames:
-	db "KOGA@"
+;	db "KOGA@"
+	db "RICK@"
 	db "@"
 	
 ; Blaine Class
 BlaineNames:
-	db "BLAINE@"
+;	db "BLAINE@"
+	db "KEN@"
 	db "@"
 	
 ; Sabrina Class
 SabrinaNames:
-	db "SABRINA@"
+;	db "SABRINA@"
+	db "MURRAY@"
 	db "@"
 	
 ; Gentleman Class
@@ -538,14 +547,18 @@ Rival2Names:
 	
 ; Rival3 Class
 Rival3Names:
-	db "BLUE@"
-	db "BLUE@"
-	db "BLUE@"
+;	db "BLUE@"
+;	db "BLUE@"
+;	db "BLUE@"
+	db "RONALD@"
+	db "RONALD@"
+	db "RONALD@"
 	db "@"
 	
 ; Lorelei Class
 LoreleiNames:
-	db "LORELEI@"
+;	db "LORELEI@"
+	db "COURTNEY@"
 	db "@"
 	
 ; Channeler Class
@@ -578,12 +591,14 @@ ChannelerNames:
 	
 ; Agatha Class
 AgathaNames:
-	db "AGATHA@"
+;	db "AGATHA@"
+	db "JACK@"
 	db "@"
 	
 ; Lance Class
 LanceNames:
-	db "LANCE@"
+;	db "LANCE@"
+	db "ROD@"
 	db "@"
 
 IndividualTrainerNamesEnd:
