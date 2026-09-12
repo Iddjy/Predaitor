@@ -56,6 +56,8 @@ All the "quirks" and bugs not mentionned above were left in.
 
 ## Other changes
 
+I added the fact that Pokemon cries play upon fainting too, just because I felt like it and it has no bearing on how battles go.
+
 I also changed the trainer data format to allow them to be more easily editable. The new format is:
 * pokemon species, pokemon level, move 1, move 2, move 3, move 4 (repeated 6 times)
 
