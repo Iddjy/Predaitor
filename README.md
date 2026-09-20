@@ -41,6 +41,7 @@ There are 2 empty trainer classes in the ROM, when you get to those in the setup
 * Removed blacking out, and player's party is healed after battle
 * Removed the ability to select a move to copy with Mimic for the player
 * Removed the difference in Psywave's damage formula between the player's side and the enemy's side (now both do at least 1 damage)
+* Removed the low-health alarm
 * Implemented PP depletion for the enemy
 * Added individual trainer names to more easily distinguish each trainer in a class
 * Added current HP/max HP under the enemy's HP bar
@@ -56,7 +57,7 @@ All the "quirks" and bugs not mentionned above were left in.
 
 ## Other changes
 
-I added the fact that Pokemon cries play upon fainting too, just because I felt like it and it has no bearing on how battles go.
+I added the fact that Pokemon cries play upon fainting too, just because I felt like it and it has no bearing on how battles go. Plus it makes things more symetric.
 
 I also changed the trainer data format to allow them to be more easily editable. The new format is:
 * pokemon species, pokemon level, move 1, move 2, move 3, move 4 (repeated 6 times)
